@@ -7,6 +7,7 @@ import { LoginView } from '../login-view/login-view';
 export class MainView extends React.Component {
   constructor(){
     super();
+    // we initialize MainView component's state (ie. components data)
     this.state = {
       movies: [],
       selectedMovie: null,
@@ -15,8 +16,10 @@ export class MainView extends React.Component {
   }
 
   componentDidMount(){
+    // We use axios library to fetch data from our API
     axios.get('https://themyflixapp.herokuapp.com/movies')
       .then(response => {
+        // We update the movie variable contained inside the component's state
         this.setState({
           movies: response.data
         });
@@ -27,12 +30,14 @@ export class MainView extends React.Component {
   }
 
   setSelectedMovie(newSelectedMovie) {
+    // We update the value of the variable selectedMovie inside the component's state
     this.setState({
       selectedMovie: newSelectedMovie
     });
   }
 
   onLoggedIn(user) {
+    // We update the user variable stored into the state of the MainView component
     this.setState({
       user
     });
