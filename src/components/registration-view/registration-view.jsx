@@ -12,7 +12,7 @@ export function RegistrationView(props) {
     console.log(username, password, email, birthday);
     /* Send a request to the server */
     /* then call props.onLoggedIn(username) */
-    // props.onLoggedIn(username);
+    props.onLoggedIn(username);
   };
 
   return (
@@ -39,9 +39,6 @@ export function RegistrationView(props) {
 
   }
 
-  RegistrationView.propTypes = {
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    birthday: PropTypes.instanceOf(Date).isRequired,
-  };
+  LoginView.propTypes = {
+    onLoggedIn: PropTypes.func.isRequired
+  }; 
