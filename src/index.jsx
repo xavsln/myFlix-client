@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { MainView } from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
+import { NavbarMyFlix } from './components/navbar-view/navbar-view';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
@@ -10,8 +11,11 @@ import './index.scss';
 class MyFlixApplication extends React.Component {
   render() {
     return (
-      <Container>
+      <Container fluid>
+        <NavbarMyFlix />
+        <Container style={{marginTop: "5rem"}}>
         <MainView />
+        </Container>
       </Container>
     );
   }
