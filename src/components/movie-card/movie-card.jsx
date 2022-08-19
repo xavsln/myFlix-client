@@ -12,7 +12,7 @@ export class MovieCard extends React.Component {
       <Card.Img variant="top" src={movie.ImagePath}  alt="Poster image of the movie" crossorigin="anonymous" />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
-        <Card.Text>{movie.Description}</Card.Text>
+        <Card.Text>{movie.Description.substring(0, 200)}... (open to read more)</Card.Text>
         <Button onClick={() => onMovieClick(movie)} variant="primary">Open</Button>
       </Card.Body>
     </Card>
