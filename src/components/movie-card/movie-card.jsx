@@ -6,9 +6,8 @@ import Card from 'react-bootstrap/Card';
 export class MovieCard extends React.Component {
   render() {
     const { movie, onMovieClick } = this.props;
-    // return <div className="movie-card" onClick={() => { onMovieClick(movie); }}>{movie.Title}</div>;
     return (
-      <Card style={{ width: '16rem' }}>
+      <Card>
       <Card.Img variant="top" src={movie.ImagePath}  alt="Poster image of the movie" crossorigin="anonymous" />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
