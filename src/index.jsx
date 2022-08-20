@@ -13,8 +13,8 @@ class MyFlixApplication extends React.Component {
     return (
       <Container fluid>
         <NavbarMyFlix />
-        <Container style={{marginTop: "5rem"}}>
-        <MainView />
+        <Container style={{ marginTop: '5rem' }}>
+          <MainView />
         </Container>
       </Container>
     );

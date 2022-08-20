@@ -7,26 +7,27 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export class MainView extends React.Component {
-  constructor(){
+  constructor() {
     super();
     // we initialize MainView component's state (ie. components data)
     this.state = {
       movies: [],
       selectedMovie: null,
-      user: null
-    }
+      user: null,
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // We use axios library to fetch data from our API
-    axios.get('https://themyflixapp.herokuapp.com/movies')
-      .then(response => {
+    axios
+      .get('https://themyflixapp.herokuapp.com/movies')
+      .then((response) => {
         // We update the movie variable contained inside the component's state
         this.setState({
-          movies: response.data
+          movies: response.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -34,39 +35,50 @@ export class MainView extends React.Component {
   setSelectedMovie(newSelectedMovie) {
     // We update the value of the variable selectedMovie inside the component's state
     this.setState({
-      selectedMovie: newSelectedMovie
+      selectedMovie: newSelectedMovie,
     });
   }
 
   onLoggedIn(user) {
     // We update the user variable stored into the state of the MainView component
     this.setState({
-      user
+      user,
     });
   }
 
   render() {
     const { movies, selectedMovie, user } = this.state;
 
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-  
+    if (!user)
+      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+
     if (movies.length === 0) return <div className="main-view" />;
-  
+
     return (
       <Row className="main-view justify-content-md-center">
-        {selectedMovie
-          ? (
-            <Col md={8}>
-              <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-            </Col>
-          )
-          : movies.map(movie => (
+        {selectedMovie ? (
+          <Col md={8}>
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={(newSelectedMovie) => {
+                this.setSelectedMovie(newSelectedMovie);
+              }}
+            />
+          </Col>
+        ) : (
+          movies.map((movie) => (
             <Col md={3}>
-              <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
+              <MovieCard
+                key={movie._id}
+                movie={movie}
+                onMovieClick={(newSelectedMovie) => {
+                  this.setSelectedMovie(newSelectedMovie);
+                }}
+              />
             </Col>
           ))
-        }
+        )}
       </Row>
     );
-      }
-    }
+  }
+}

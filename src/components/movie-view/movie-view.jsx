@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, Button, Container, Row, Col, Card} from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 export class MovieView extends React.Component {
-
   render() {
     const { movie, onBackClick } = this.props;
 
     return (
-   
-   
       <Row className="movie-view justify-content-md-center mt-5">
-        
-
         <Col>
           <div className="movie-poster mb-1">
-            <img src={movie.ImagePath} className='img-fluid' alt="Poster image of the movie" crossorigin="anonymous" />
+            <img
+              src={movie.ImagePath}
+              className="img-fluid"
+              alt="Poster image of the movie"
+              crossorigin="anonymous"
+            />
           </div>
         </Col>
-        
+
         <Col md={7}>
           <div className="movie-title mb-1">
             <span className="label font-weight-bold">Title: </span>
@@ -40,9 +40,15 @@ export class MovieView extends React.Component {
             <span className="label font-weight-bold">Rating: </span>
             <span className="value">{movie.Rating}</span>
           </div>
-          <Button onClick={() => { onBackClick(null); }}>Back</Button>
+          <Button
+            onClick={() => {
+              onBackClick(null);
+            }}
+          >
+            Back
+          </Button>
         </Col>
-      </Row>  
+      </Row>
     );
   }
 }
@@ -53,17 +59,17 @@ MovieView.propTypes = {
     Description: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
       Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
+      Description: PropTypes.string.isRequired,
     }),
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
       Birth: PropTypes.instanceOf(Date).isRequired,
-      Death: PropTypes.instanceOf(Date).isRequired // => To be checked
+      Death: PropTypes.instanceOf(Date).isRequired, // => To be checked
     }),
     ImagePath: PropTypes.string.isRequired,
     Rating: PropTypes.number.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired
+  onBackClick: PropTypes.func.isRequired,
 };
