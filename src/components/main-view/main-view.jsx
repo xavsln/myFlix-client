@@ -39,11 +39,33 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     // We update the user variable stored into the state of the MainView component
     this.setState({
-      user,
+      user: authData.user.Username,
     });
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('username', authData.user.Username);
+    localStorage.setItem('role', authData.user.Role);
+    this.getMovies(authData.token);
+  }
+
+  getMovies(token) {
+    console.log('getMovies function successfully tiggered.');
+    axios
+      .get('https://themyflixapp.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        // Assign the result to the state
+        this.setState({
+          movies: response.data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   render() {

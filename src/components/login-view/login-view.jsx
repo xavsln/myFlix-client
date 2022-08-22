@@ -8,18 +8,31 @@ export function LoginView(props) {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
+    console.log(username);
+    console.log(typeof username);
+    console.log(password);
+    console.log(typeof password);
     e.preventDefault();
     axios
-      .post('https://themyflixapp.herokuapp.com/login', {
-        Username: username,
-        Password: password,
-      })
+      .post(
+        'https://themyflixapp.herokuapp.com/login?Username=' +
+          username +
+          '&Password=' +
+          password
+        // {
+        //   Username: username,
+        //   Password: password,
+        // }
+      )
       .then((response) => {
         const data = response.data;
         props.onLoggedIn(data);
+        console.log('sucessfull login');
       })
       .catch((e) => {
-        console.log('no such user');
+        console.log('no such user' + username + 'in the DB');
+        console.log(username);
+        console.log(password);
       });
   };
 
@@ -50,7 +63,7 @@ export function LoginView(props) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  minLength="8"
+                  // minLength="8"
                   required
                 />
               </Form.Group>
