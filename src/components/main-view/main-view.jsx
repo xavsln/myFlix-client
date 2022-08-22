@@ -19,17 +19,17 @@ export class MainView extends React.Component {
 
   componentDidMount() {
     // We use axios library to fetch data from our API
-    axios
-      .get('https://themyflixapp.herokuapp.com/movies')
-      .then((response) => {
-        // We update the movie variable contained inside the component's state
-        this.setState({
-          movies: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .get('https://themyflixapp.herokuapp.com/movies')
+    //   .then((response) => {
+    //     // We update the movie variable contained inside the component's state
+    //     this.setState({
+    //       movies: response.data,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     // We store the token in our browser to allow authentication from the Client side
     let accessToken = localStorage.getItem('token');
@@ -58,11 +58,14 @@ export class MainView extends React.Component {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
+
     this.getMovies(authData.token);
   }
 
   getMovies(token) {
     console.log('getMovies function successfully tiggered.');
+
+    // We use axios library to fetch data from our API
     axios
       .get('https://themyflixapp.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}` },
