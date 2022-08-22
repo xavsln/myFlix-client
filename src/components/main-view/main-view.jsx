@@ -30,6 +30,16 @@ export class MainView extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+
+    // We store the token in our browser to allow authentication from the Client side
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user'),
+        role: localStorage.getItem('role'),
+      });
+      this.getMovies(accessToken);
+    }
   }
 
   setSelectedMovie(newSelectedMovie) {
@@ -46,7 +56,7 @@ export class MainView extends React.Component {
       user: authData.user.Username,
     });
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('username', authData.user.Username);
+    localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
     this.getMovies(authData.token);
   }
