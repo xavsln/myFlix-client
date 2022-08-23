@@ -7,33 +7,62 @@ export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Declare hook for each input
+  const [usernameErr, setUsernameErr] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
+
+  // validate user inputs
+  const validate = () => {
+    let isReq = true;
+    if (!username) {
+      setUsernameErr('Username Required');
+      isReq = false;
+    } else if (username.length < 2) {
+      setUsernameErr('Username must be 2 characters long');
+      isReq = false;
+    }
+    if (!password) {
+      setPasswordErr('Password Required');
+      isReq = false;
+    } else if (password.length < 4) {
+      setPassword('Password must be 4 characters long');
+      isReq = false;
+    }
+
+    return isReq;
+  };
+
   const handleSubmit = (e) => {
     console.log(username);
     console.log(typeof username);
     console.log(password);
     console.log(typeof password);
     e.preventDefault();
-    axios
-      .post(
-        'https://themyflixapp.herokuapp.com/login?Username=' +
-          username +
-          '&Password=' +
-          password
-        // {
-        //   Username: username,
-        //   Password: password,
-        // }
-      )
-      .then((response) => {
-        const data = response.data;
-        props.onLoggedIn(data);
-        console.log('sucessfull login');
-      })
-      .catch((e) => {
-        console.log('no such user' + username + 'in the DB');
-        console.log(username);
-        console.log(password);
-      });
+
+    const isReq = validate();
+    if (isReq) {
+      axios
+        .post(
+          'https://themyflixapp.herokuapp.com/login?Username=' +
+            username +
+            '&Password=' +
+            password
+          // {
+          //   Username: username,
+          //   Password: password,
+          // }
+        )
+        .then((response) => {
+          const data = response.data;
+          props.onLoggedIn(data);
+          console.log('sucessfull login');
+        })
+        .catch((e) => {
+          console.log('no such user' + username + 'in the DB');
+          console.log(username);
+          console.log(password);
+        });
+    }
   };
 
   return (
@@ -45,27 +74,29 @@ export function LoginView(props) {
               <h2>Login</h2>
             </Card.Header>
             <Form style={{ width: '80%', margin: '1rem auto' }}>
-              <Form.Group>
+              <Form.Group controlId="formUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter Username"
-                  required
                 />
+                {/* code added here to display validation error */}
+                {usernameErr && <p>{usernameErr}</p>}
               </Form.Group>
 
-              <Form.Group>
-                <Form.Label>Password:</Form.Label>
+              <Form.Group controlId="formPassword">
+                <Form.Label>Password: (minimum 4 characters)</Form.Label>
                 <Form.Control
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                   // minLength="8"
-                  required
                 />
+                {/* code added here to display validation error */}
+                {passwordErr && <p>{passwordErr}</p>}
               </Form.Group>
 
               <Form.Group className="text-center" style={{ margin: '1rem' }}>
