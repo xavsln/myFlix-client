@@ -25,7 +25,7 @@ export function LoginView(props) {
       setPasswordErr('Password Required');
       isReq = false;
     } else if (password.length < 4) {
-      setPassword('Password must be 4 characters long');
+      setPasswordErr('Password must be 4 characters long');
       isReq = false;
     }
 
@@ -58,7 +58,8 @@ export function LoginView(props) {
           console.log('sucessfull login');
         })
         .catch((e) => {
-          console.log('no such user' + username + 'in the DB');
+          // console.log('no such user ' + username + ' in the DB');
+          alert('no such user: ' + username + ' in the DB');
           console.log(username);
           console.log(password);
         });
