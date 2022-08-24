@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
+
 export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
@@ -29,11 +31,19 @@ export class MovieView extends React.Component {
             <span className="value">{movie.Description}</span>
           </div>
           <div className="movie-genre-name mb-1">
-            <span className="label font-weight-bold">Genre: </span>
+            <span className="label font-weight-bold">
+              <Link to={`/genres/${movie.Genre.Name}`}>
+                <Button variant="link">Genre</Button>
+              </Link>
+            </span>
             <span className="value">{movie.Genre.Name}</span>
           </div>
           <div className="movie-director-name mb-1">
-            <span className="label font-weight-bold">Director: </span>
+            <span className="label font-weight-bold">
+              <Link to={`/directors/${movie.Director.Name}`}>
+                <Button variant="link">Director: </Button>
+              </Link>
+            </span>
             <span className="value">{movie.Director.Name}</span>
           </div>
           <div className="movie-rating mb-3">

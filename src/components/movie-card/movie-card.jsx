@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Container } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
+
 export class MovieCard extends React.Component {
   render() {
     const { movie, onMovieClick } = this.props;
@@ -23,9 +25,9 @@ export class MovieCard extends React.Component {
           <Card.Text>
             {movie.Description.substring(0, 200)}... (open to read more)
           </Card.Text>
-          <Button onClick={() => onMovieClick(movie)} variant="primary">
-            Open
-          </Button>
+          <Link to={`/movies/${movie._id}`}>
+            <Button variant="link">Open</Button>
+          </Link>
         </Card.Body>
       </Card>
     );

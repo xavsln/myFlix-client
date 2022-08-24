@@ -56,6 +56,6 @@ export function RegistrationView(props) {
   );
 }
 
-LoginView.propTypes = {
-  onLoggedIn: PropTypes.func.isRequired,
-};
+// LoginView.propTypes = {
+//   onLoggedIn: PropTypes.func.isRequired,
+// };
