@@ -7,6 +7,7 @@ import { MenuBar } from '../menu-bar/menu-bar';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
+import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -50,6 +51,7 @@ export class MainView extends React.Component {
 
     // We store the token in our browser to allow authentication from the Client side
     let accessToken = localStorage.getItem('token');
+
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem('user'),
@@ -61,13 +63,18 @@ export class MainView extends React.Component {
 
   onLoggedIn(authData) {
     console.log(authData);
+
     // We update the user variable stored into the state of the MainView component
     this.setState({
       user: authData.user.Username,
     });
+
     localStorage.setItem('token', authData.token);
+    // localStorage.setItem('user', authData.user);
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
+    localStorage.setItem('email', authData.user.Email);
+    localStorage.setItem('birthday', authData.user.Birthday);
 
     this.getMovies(authData.token);
   }
@@ -104,7 +111,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, role } = this.state;
 
     return (
       <Router>
@@ -198,15 +205,23 @@ export class MainView extends React.Component {
                 return <RegistrationView />;
               }}
             />
+
+            <Route
+              path="/profile"
+              render={() => {
+                return <ProfileView user={user} role={role} />;
+              }}
+            />
           </Row>
+
           <Row>
-            <Button
+            {/* <Button
               onClick={() => {
                 this.onLoggedOut();
               }}
             >
               Logout
-            </Button>
+            </Button> */}
           </Row>
         </Container>
       </Router>

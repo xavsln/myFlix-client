@@ -25,6 +25,8 @@ export function MenuBar({ user }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
+    localStorage.removeItem('email');
+    localStorage.removeItem('birthday');
 
     // Update state to show the initial view after User logged out
     this.setState({
@@ -50,6 +52,7 @@ export function MenuBar({ user }) {
             )}
             {!isloggedin() && <Nav.Link href="#login">Login</Nav.Link>}
             {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}
+            <a href="/profile">Profile under progress</a>
           </Nav>
         </Container>
       </Navbar>
