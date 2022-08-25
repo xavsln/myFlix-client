@@ -22,6 +22,18 @@ export class MainView extends React.Component {
     };
   }
 
+  // onLoggedOut() {
+  //   // Remove the saved used data from browser storage
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('user');
+  //   localStorage.removeItem('role');
+
+  //   // Update state to show the initial view after User logged out
+  //   this.setState({
+  //     user: null,
+  //   });
+  // }
+
   componentDidMount() {
     // We use axios library to fetch data from our API
     // axios
@@ -94,19 +106,9 @@ export class MainView extends React.Component {
   render() {
     const { movies, user } = this.state;
 
-    // if (!user)
-    //   return (
-    //     <Row>
-    //       <Col>
-    //         <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-    //       </Col>
-    //     </Row>
-    //   );
-    // if (movies.length === 0) return <div className="main-view" />;
-
     return (
       <Router>
-        <MenuBar user={user} />
+        <MenuBar user={user} onLoggedIn={(user) => this.onLoggedOut(user)} />
 
         <Container>
           <Row className="main-view justify-content-md-center">
@@ -118,7 +120,7 @@ export class MainView extends React.Component {
                   return (
                     <Col>
                       <LoginView
-                        movies={movies}
+                        // movies={movies}
                         onLoggedIn={(user) => this.onLoggedIn(user)}
                       />
                     </Col>
@@ -137,6 +139,17 @@ export class MainView extends React.Component {
             <Route
               path="/movies/:movieId"
               render={({ match, history }) => {
+                if (!user)
+                  return (
+                    <Col>
+                      {alert('You need to be logged in to see this page')}
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+
+                if (movies.length === 0)
+                  return <div className="main-view"></div>;
+
                 return (
                   <Col md={8}>
                     <MovieView
@@ -152,7 +165,17 @@ export class MainView extends React.Component {
             <Route
               path="/directors/:name"
               render={({ match, history }) => {
-                if (movies.length === 0) return <div className="main-view" />;
+                if (!user)
+                  return (
+                    <Col>
+                      {alert('You need to be logged in to see this page')}
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+
+                if (movies.length === 0)
+                  return <div className="main-view"></div>;
+
                 return (
                   <Col md={8}>
                     <DirectorView
