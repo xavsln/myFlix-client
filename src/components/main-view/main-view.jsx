@@ -23,18 +23,6 @@ export class MainView extends React.Component {
     };
   }
 
-  // onLoggedOut() {
-  //   // Remove the saved used data from browser storage
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('user');
-  //   localStorage.removeItem('role');
-
-  //   // Update state to show the initial view after User logged out
-  //   this.setState({
-  //     user: null,
-  //   });
-  // }
-
   componentDidMount() {
     // We use axios library to fetch data from our API
     // axios
@@ -112,6 +100,7 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user, role } = this.state;
+    console.log(movies);
 
     return (
       <Router>
@@ -209,7 +198,7 @@ export class MainView extends React.Component {
             <Route
               path="/profile"
               render={() => {
-                return <ProfileView user={user} role={role} />;
+                return <ProfileView user={user} role={role} movies={movies} />;
               }}
             />
           </Row>
