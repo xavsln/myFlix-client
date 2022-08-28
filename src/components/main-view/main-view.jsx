@@ -12,6 +12,8 @@ import { RegistrationView } from '../registration-view/registration-view';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { RegistrationView } from '../registration-view/registration-view';
+import { GenreView } from '../genre-view/genre-view';
+import { DirectorView } from '../director-view/director-view';
 
 export class MainView extends React.Component {
   constructor() {
@@ -156,7 +158,31 @@ export class MainView extends React.Component {
                 );
               }}
             />
-            <Route exact path="/genres" component={<p>Genre view</p>} />
+
+            <Route
+              path="/genres/:name"
+              render={({ match, history }) => {
+                if (!user)
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+                if (movies.length === 0) return <div className="main-view" />;
+                return (
+                  <Col md={8}>
+                    <GenreView
+                      genre={
+                        movies.find((m) => m.Genre.Name === match.params.name)
+                          .Genre
+                      }
+                      history={history}
+                      onBackClick={() => history.goBack()}
+                    />
+                  </Col>
+                );
+              }}
+            />
 
             <Route
               path="/directors/:name"

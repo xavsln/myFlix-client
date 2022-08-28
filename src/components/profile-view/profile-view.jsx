@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { UserInfo } from './user-info';
+import { UserUpdate } from './user-update';
 
 import { Container, Row, Col, Card, Figure, Button } from 'react-bootstrap';
 
@@ -75,18 +76,6 @@ export function ProfileView(props) {
               <p>Name: {user.Username}</p>
               <p>Email: {user.Email}</p>
               {user.Birthday && <p>Birthday: {user.Birthday.slice(0, 10)}</p>}
-              {/* <p>
-                Favorite Movies:
-                {favoriteMovies.map((movie) => {
-                  return (
-                    <>
-                      <p>{movie}</p>
-                      <p></p>
-                    </>
-                  );
-                })}
-              </p>
-              {console.log(favoriteMovies)} */}
             </Card.Body>
           </Card>
         </Col>
@@ -96,7 +85,9 @@ export function ProfileView(props) {
               <Card.Title>
                 <h4>Profile update:</h4>
               </Card.Title>
-              <UserInfo />
+              <UserUpdate user={user} />
+              {/* <p>Name: {user.Username}</p> */}
+              {console.log('User from the user state in update section', user)}
             </Card.Body>
           </Card>
         </Col>
@@ -129,7 +120,7 @@ export function ProfileView(props) {
                             <Figure.Caption>{movie.Title}</Figure.Caption>
                           </Link>
                           <Button
-                            variant="secondary"
+                            variant="warning"
                             onClick={() => removeFav(movie._id)}
                           >
                             Remove from list
