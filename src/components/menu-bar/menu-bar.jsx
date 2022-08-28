@@ -36,30 +36,6 @@ export function MenuBar({ user }) {
 
   return (
     <>
-      {/* <Navbar bg="dark" variant="dark" fixed="top" className="mb-5">
-        <Container>
-          <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
-
-          <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
-
-            {isloggedin() && (
-              <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
-            )}
-
-            {isloggedin() && (
-              <Nav.Link onClick={onLoggedOut} href="/">
-                Logout
-              </Nav.Link>
-            )}
-            {!isloggedin() && <Nav.Link href="#login">Login</Nav.Link>}
-            {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}
-          </Nav>
-        </Container>
-      </Navbar> */}
-
-      {/* <br></br> */}
       <Navbar bg="dark" variant="dark" fixed="top" expand="lg">
         <Container>
           <Navbar.Brand href="/">MyFlix</Navbar.Brand>

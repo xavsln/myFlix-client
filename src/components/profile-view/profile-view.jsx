@@ -63,6 +63,36 @@ export function ProfileView(props) {
     }
   };
 
+  const onDeregister = (user_id) => {
+    // alert('You will deregister');
+    console.log(user_id);
+    // Confirmation box
+    let confirmActionMessage = confirm(
+      'Are you sure you want to deregister from myFlix?'
+    );
+    if (confirmActionMessage) {
+      axios.delete(`https://themyflixapp.herokuapp.com/users/${user_id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log('User removed');
+      alert('User deleted from the list.');
+
+      // Remove the saved used data from browser storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('role');
+      localStorage.removeItem('email');
+      localStorage.removeItem('birthday');
+
+      // Update state to show the initial view after User logged out
+      this.setState({
+        user: null,
+      });
+    } else {
+      alert('User not deleted from the list.');
+    }
+  };
+
   return (
     <Container>
       <Row>
@@ -76,6 +106,15 @@ export function ProfileView(props) {
               <p>Name: {user.Username}</p>
               <p>Email: {user.Email}</p>
               {user.Birthday && <p>Birthday: {user.Birthday.slice(0, 10)}</p>}
+              <Button
+                variant="danger"
+                onClick={() => {
+                  onDeregister(user._id);
+                }}
+                href="/"
+              >
+                Deregister
+              </Button>
             </Card.Body>
           </Card>
         </Col>

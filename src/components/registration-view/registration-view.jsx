@@ -54,7 +54,6 @@ export function RegistrationView(props) {
     /* Send a request to the server */
 
     const isReq = validate();
-    // alert('Good job!');
 
     if (isReq) {
       axios
