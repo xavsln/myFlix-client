@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Nav, Navbar, Button } from 'react-bootstrap';
+import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
 
 export function MenuBar({ user }) {
   // check if user is logged in
@@ -36,15 +36,18 @@ export function MenuBar({ user }) {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" fixed="top" className="mb-5">
+      {/* <Navbar bg="dark" variant="dark" fixed="top" className="mb-5">
         <Container>
           <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
+
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
+
             {isloggedin() && (
               <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
             )}
+
             {isloggedin() && (
               <Nav.Link onClick={onLoggedOut} href="/">
                 Logout
@@ -53,6 +56,58 @@ export function MenuBar({ user }) {
             {!isloggedin() && <Nav.Link href="#login">Login</Nav.Link>}
             {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}
           </Nav>
+        </Container>
+      </Navbar> */}
+
+      {/* <br></br> */}
+      <Navbar bg="dark" variant="dark" fixed="top" expand="lg">
+        <Container>
+          <Navbar.Brand href="/">MyFlix</Navbar.Brand>
+
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <Nav.Link href="/">Home |</Nav.Link>
+              {/* <Nav.Link href="/profile">Profile</Nav.Link> */}
+
+              {/* {isloggedin() && (
+                <Nav.Link href={`/users/${user}`}>
+                  My favorite movies |
+                </Nav.Link>
+              )} */}
+
+              {/* {isloggedin() && (
+                <Nav.Link onClick={onLoggedOut} href="/">
+                  Logout
+                </Nav.Link>
+              )} */}
+
+              {!isloggedin() && <Nav.Link href="/">Login |</Nav.Link>}
+              {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}
+
+              {isloggedin() && (
+                <NavDropdown title={user} id="user-nav-dropdown">
+                  {/* <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item> */}
+
+                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+
+                  {/* <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+
+
+
+                <NavDropdown.Divider />
+
+                {/* Logout navigation link */}
+
+                  <NavDropdown.Item onClick={onLoggedOut} href="/">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

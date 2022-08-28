@@ -228,16 +228,6 @@ export class MainView extends React.Component {
               }}
             />
           </Row>
-
-          <Row>
-            {/* <Button
-              onClick={() => {
-                this.onLoggedOut();
-              }}
-            >
-              Logout
-            </Button> */}
-          </Row>
         </Container>
       </Router>
     );

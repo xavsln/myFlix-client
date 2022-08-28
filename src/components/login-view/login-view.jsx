@@ -109,13 +109,13 @@ export function LoginView(props) {
                 >
                   Submit
                 </Button>
-                <Button
+                {/* <Button
                   variant="secondary"
                   type="button"
                   style={{ margin: '1rem' }}
                 >
                   Register
-                </Button>
+                </Button> */}
               </Form.Group>
             </Form>
           </Card>
