@@ -43,16 +43,10 @@ export function LoginView(props) {
     const isReq = validate();
     if (isReq) {
       axios
-        .post(
-          'https://themyflixapp.herokuapp.com/login?Username=' +
-            username +
-            '&Password=' +
-            password
-          // {
-          //   Username: username,
-          //   Password: password,
-          // }
-        )
+        .post('https://themyflixapp.herokuapp.com/login', {
+          Username: username,
+          Password: password,
+        })
         .then((response) => {
           const data = response.data;
           props.onLoggedIn(data);
