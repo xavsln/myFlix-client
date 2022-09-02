@@ -9,16 +9,15 @@ import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
-
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
+
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 export class MainView extends React.Component {
   constructor() {
     super();
-    // we initialize MainView component's state (ie. components data)
+    // Initialize MainView component's state (ie. components data)
     this.state = {
       movies: [],
       user: null,
@@ -26,20 +25,7 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    // We use axios library to fetch data from our API
-    // axios
-    //   .get('https://themyflixapp.herokuapp.com/movies')
-    //   .then((response) => {
-    //     // We update the movie variable contained inside the component's state
-    //     this.setState({
-    //       movies: response.data,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    // We store the token in our browser to allow authentication from the Client side
+    // Store the token in the browser to allow authentication from the Client side
     let accessToken = localStorage.getItem('token');
 
     if (accessToken !== null) {
@@ -69,17 +55,17 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  onLoggedOut() {
-    // Remove the saved used data from browser storage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
+  // onLoggedOut() {
+  //   // Remove the saved used data from browser storage
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('user');
+  //   localStorage.removeItem('role');
 
-    // Update state to show the initial view after User logged out
-    this.setState({
-      user: null,
-    });
-  }
+  //   // Update state to show the initial view after User logged out
+  //   this.setState({
+  //     user: null,
+  //   });
+  // }
 
   getMovies(token) {
     console.log('getMovies function successfully tiggered.');
@@ -102,7 +88,6 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user, role } = this.state;
-    console.log(movies);
 
     return (
       <Router>
@@ -117,10 +102,7 @@ export class MainView extends React.Component {
                 if (!user)
                   return (
                     <Col>
-                      <LoginView
-                        // movies={movies}
-                        onLoggedIn={(user) => this.onLoggedIn(user)}
-                      />
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                     </Col>
                   );
 
