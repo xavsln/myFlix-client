@@ -56,7 +56,9 @@ export function ProfileView(props) {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
+
       console.log('Movie removed');
+
       alert('Movie successfully deleted from the list.');
     } else {
       alert('Movie not deleted from the list.');

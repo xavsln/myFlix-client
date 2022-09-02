@@ -55,18 +55,6 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  // onLoggedOut() {
-  //   // Remove the saved used data from browser storage
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('user');
-  //   localStorage.removeItem('role');
-
-  //   // Update state to show the initial view after User logged out
-  //   this.setState({
-  //     user: null,
-  //   });
-  // }
-
   getMovies(token) {
     console.log('getMovies function successfully tiggered.');
 

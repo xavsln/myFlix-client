@@ -1,8 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import axios from 'axios';
+
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
+
+const currentUser = localStorage.getItem('user');
+
+const accessToken = localStorage.getItem('token');
+
+const addMovieToFavList = (movieId) => {
+  console.log(`test: ${movieId}`);
+  console.log('Current user:', currentUser);
+  // console.log('AccessToken: ', accessToken);
+
+  // axios.post(
+  //   `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movieId}`,
+  //   {
+  //     headers: { Authorization: `Bearer ${accessToken}` },
+  //   }
+  // );
+
+  alert('Movie will be successfully added to the list of favorites. (later)');
+};
 
 export class MovieView extends React.Component {
   render() {
@@ -55,13 +77,26 @@ export class MovieView extends React.Component {
             <span className="value">{movie.Rating}</span>
           </div>
 
-          <Button
-            onClick={() => {
-              onBackClick(null);
-            }}
-          >
-            Back
-          </Button>
+          <div className="mb-3">
+            <Button
+              variant="success"
+              onClick={() => {
+                addMovieToFavList(movie._id);
+              }}
+            >
+              Add movie to Favorites
+            </Button>
+          </div>
+
+          <div>
+            <Button
+              onClick={() => {
+                onBackClick(null);
+              }}
+            >
+              Back
+            </Button>
+          </div>
         </Col>
       </Row>
     );
