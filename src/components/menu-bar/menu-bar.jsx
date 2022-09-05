@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
+// import { VisibilityFilterInput } from '../visibility-filter-input/visibility-filter-input';
 
 export function MenuBar({ user }) {
   // check if user is logged in

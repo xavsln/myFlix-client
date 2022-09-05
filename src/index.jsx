@@ -1,22 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MainView } from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
-import { NavbarMyFlix } from './components/menu-bar/menu-bar';
+
+// import { createStore } from 'redux';
+import { legacy_createStore as createStore } from 'redux';
+import { Provider } from 'react-redux';
+import moviesApp from './reducers/reducers';
+
+import { devToolsEnhancer } from 'redux-devtools-extension';
+
+import MainView from './components/main-view/main-view';
+// import VisibilityFilterInput from './components/visibility-filter-input/visibility-filter-input';
+
+// import { NavbarMyFlix } from './components/menu-bar/menu-bar';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
+
+const store = createStore(moviesApp, devToolsEnhancer());
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
   render() {
     return (
-      <Container fluid>
-        {/* <NavbarMyFlix /> */}
-        <Container style={{ marginTop: '5rem' }}>
-          <MainView />
+      <Provider store={store}>
+        <Container fluid>
+          {/* <NavbarMyFlix /> */}
+
+          <Container style={{ marginTop: '5rem' }}>
+            {/* <VisibilityFilterInput /> */}
+            <MainView />
+          </Container>
         </Container>
-      </Container>
+      </Provider>
     );
   }
 }

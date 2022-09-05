@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
+import { readMoviesList } from '../../actions/actions';
+import MoviesList from '../movies-list/movies-list';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { MenuBar } from '../menu-bar/menu-bar';
@@ -11,15 +16,16 @@ import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
+import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
     // Initialize MainView component's state (ie. components data)
     this.state = {
-      movies: [],
+      // movies: [],
       user: null,
     };
   }
@@ -65,9 +71,10 @@ export class MainView extends React.Component {
       })
       .then((response) => {
         // Assign the result to the state
-        this.setState({
-          movies: response.data,
-        });
+        // this.setState({
+        //   movies: response.data,
+        // });
+        this.props.readMoviesList(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -75,13 +82,21 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, role } = this.state;
+    // const { movies, user, role } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     return (
       <Router>
         <MenuBar user={user} />
 
         <Container>
+          {/* <Row className="main-view justify-content-md-center mb-3">
+            <Col xl={12}>
+              <VisibilityFilterInput />
+            </Col>
+          </Row> */}
+
           <Row className="main-view justify-content-md-center">
             <Route
               exact
@@ -96,11 +111,14 @@ export class MainView extends React.Component {
 
                 if (movies.length === 0) return <div className="main-view" />;
 
-                return movies.map((m) => (
-                  <Col md={3} key={m._id}>
-                    <MovieCard movie={m} />
-                  </Col>
-                ));
+                return (
+                  <>
+                    <Col xl={12} className="mb-3">
+                      <VisibilityFilterInput />
+                    </Col>
+                    <MoviesList movies={movies} />;
+                  </>
+                );
               }}
             />
 
@@ -203,3 +221,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { readMoviesList })(MainView);
