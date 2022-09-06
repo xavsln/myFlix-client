@@ -23,7 +23,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 class MainView extends React.Component {
   constructor() {
     super();
-    // Initialize MainView component's state (ie. components data)
+    // State declaration - Initialize MainView component's state (ie. components data)
     this.state = {
       // movies: [],
       user: null,
@@ -74,6 +74,8 @@ class MainView extends React.Component {
         // this.setState({
         //   movies: response.data,
         // });
+
+        // We call readMoviesList action and pass the full movies list
         this.props.readMoviesList(response.data);
       })
       .catch(function (error) {
@@ -85,18 +87,13 @@ class MainView extends React.Component {
     // const { movies, user, role } = this.state;
     let { movies } = this.props;
     let { user } = this.state;
+    let { role } = this.state;
 
     return (
       <Router>
         <MenuBar user={user} />
 
         <Container>
-          {/* <Row className="main-view justify-content-md-center mb-3">
-            <Col xl={12}>
-              <VisibilityFilterInput />
-            </Col>
-          </Row> */}
-
           <Row className="main-view justify-content-md-center">
             <Route
               exact

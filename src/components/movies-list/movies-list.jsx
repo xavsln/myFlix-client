@@ -6,17 +6,17 @@ import { connect } from 'react-redux';
 import { MovieCard } from '../movie-card/movie-card';
 
 const mapStateToProps = (state) => {
-  const { visibilityFilter } = state;
-  return { visibilityFilter };
+  const { visibilityFilterReducer } = state;
+  return { visibilityFilterReducer };
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter } = props;
+  const { movies, visibilityFilterReducer } = props;
   let filteredMovies = movies;
 
-  if (visibilityFilter !== '') {
+  if (visibilityFilterReducer !== '') {
     filteredMovies = movies.filter((m) =>
-      m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+      m.Title.toLowerCase().includes(visibilityFilterReducer.toLowerCase())
     );
   }
 
