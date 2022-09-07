@@ -22,6 +22,7 @@ const store = createStore(moviesApp, devToolsEnhancer());
 class MyFlixApplication extends React.Component {
   render() {
     return (
+      // As we wrap our entire App with Provider store, the store will be accesiible from the entire App
       <Provider store={store}>
         <Container fluid>
           <Container style={{ marginTop: '5rem' }}>

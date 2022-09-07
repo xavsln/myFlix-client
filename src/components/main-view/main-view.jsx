@@ -3,19 +3,20 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 
-import { readMoviesList } from '../../actions/actions';
+import { readMoviesList, readSelectedMovieInfo } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { MenuBar } from '../menu-bar/menu-bar';
-import { MovieCard } from '../movie-card/movie-card';
+
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
+
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -84,13 +85,18 @@ class MainView extends React.Component {
   }
 
   render() {
-    // const { movies, user, role } = this.state;
-    let { movies } = this.props;
+    // const { movies, user, role } = this.state;  // Unused now... was needed when state was stored in the component private store (vs. Redux store as below)
+
+    console.log('movies object extracted from the props: ', this.props);
+    // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into this component)
+    let { movies } = this.props; // movies is extracted from this.props rather than from the this.state
+
     let { user } = this.state;
     let { role } = this.state;
 
     return (
       <Router>
+        {/* MenuBar component with user **prop** (ie. variable) to be passed from parent component (ie. MainView) to MenuBar Child component */}
         <MenuBar user={user} />
 
         <Container>
@@ -133,10 +139,23 @@ class MainView extends React.Component {
                 if (movies.length === 0)
                   return <div className="main-view"></div>;
 
+                console.log('Show movies', movies);
+                console.log(
+                  'props access from the movies/:movieId: ',
+                  this.props
+                );
+
+                // this.props.readSelectedMovieInfo(movie);
+                let movie = movies.find((m) => m._id === match.params.movieId);
+
+                console.log('Movie from movie :', movie);
+                this.props.readSelectedMovieInfo(movie);
+
                 return (
                   <Col md={8}>
                     <MovieView
-                      movie={movies.find((m) => m._id === match.params.movieId)}
+                      movie={movie}
+                      // movie={movies.find((m) => m._id === match.params.movieId)}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>
@@ -219,8 +238,15 @@ class MainView extends React.Component {
   }
 }
 
+// mapStateToProps is a function that—if defined—will allow the component (the one we want to connect) to subscribe to store updates.
+// Any time the store is updated, this function will be called.
 let mapStateToProps = (state) => {
   return { movies: state.movies };
 };
 
-export default connect(mapStateToProps, { readMoviesList })(MainView);
+// Allows to convert state (in this case our actions/functions) to props and make it available for use in designated components
+// Thanks to that we will have access to readMoviesList and readSelectedMovieInfo functions (ie. actions) from the props
+export default connect(mapStateToProps, {
+  readMoviesList,
+  readSelectedMovieInfo,
+})(MainView);

@@ -17,6 +17,7 @@ export function readMoviesList(value) {
   };
 }
 
+// When readSelectedMovieInfo function is called from the MainView component, the following will be triggered:
 export function readSelectedMovieInfo(value) {
   console.log('READ_SELECTED_MOVIE_INFO action triggered');
   return {

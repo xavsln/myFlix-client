@@ -2,12 +2,17 @@
 
 import { combineReducers } from 'redux';
 
-// Import the action types variables
-import { READ_MOVIES_LIST, SET_FILTER } from '../actions/actions';
+// Import the action types variables from actions.js
+import {
+  READ_MOVIES_LIST,
+  SET_FILTER,
+  READ_SELECTED_MOVIE_INFO,
+} from '../actions/actions';
 
 // visibilityFilter Reducer:
 // -------------------------
 // . Declare visibilityFilter **reducer function** that take a **state** and an **action**
+// . state = '' will only be used to initialize the state. Then the latest state will be used.
 
 function visibilityFilterReducer(state = '', action) {
   switch (action.type) {
@@ -29,6 +34,10 @@ function movies(state = [], action) {
     case READ_MOVIES_LIST:
       console.log('READ_MOVIES_LIST reducer reached');
       return action.value; // in this case it will return the response.data from axios (ie. the movies list)
+
+    case READ_SELECTED_MOVIE_INFO:
+      console.log('READ_SELECTED_MOVIE_INFO reducer reached');
+      return action.value;
 
     default:
       return state;
