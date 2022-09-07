@@ -87,9 +87,12 @@ class MainView extends React.Component {
   render() {
     // const { movies, user, role } = this.state;  // Unused now... was needed when state was stored in the component private store (vs. Redux store as below)
 
-    console.log('movies object extracted from the props: ', this.props);
+    console.log('movies state object extracted from the props: ', this.props);
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into this component)
-    let { movies } = this.props; // movies is extracted from this.props rather than from the this.state
+    let { movies } = this.props.movies; // movies is extracted from this.props rather than from the this.state
+    console.log('Movies after the props: ', movies);
+    // let { selectedMovie } = this.props.selectedMovie;
+    // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
     let { user } = this.state;
     let { role } = this.state;
@@ -149,10 +152,15 @@ class MainView extends React.Component {
                 let movie = movies.find((m) => m._id === match.params.movieId);
 
                 console.log('Movie from movie :', movie);
+                // pass the selected movie to the readSelectedMovieInfo action
                 this.props.readSelectedMovieInfo(movie);
 
                 return (
                   <Col md={8}>
+                    {console.log(
+                      'movie value before it is passed as prop in MovieView: ',
+                      movie
+                    )}
                     <MovieView
                       movie={movie}
                       // movie={movies.find((m) => m._id === match.params.movieId)}

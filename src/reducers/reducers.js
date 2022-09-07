@@ -29,15 +29,20 @@ function visibilityFilterReducer(state = '', action) {
 // . Declare movies **reducer function** that take a **state** and an **action**
 // . state = [] will only be used to initialize the state. Then the latest state will be used
 
-function movies(state = [], action) {
+let initialState = {
+  movies: [],
+  selectedMovie: null,
+};
+
+function movies(state = initialState, action) {
   switch (action.type) {
     case READ_MOVIES_LIST:
       console.log('READ_MOVIES_LIST reducer reached');
-      return action.value; // in this case it will return the response.data from axios (ie. the movies list)
+      return { ...state, movies: action.value }; // in this case it will return the response.data from axios (ie. the movies list)
 
     case READ_SELECTED_MOVIE_INFO:
       console.log('READ_SELECTED_MOVIE_INFO reducer reached');
-      return action.value;
+      return { ...state, selectedMovie: action.value };
 
     default:
       return state;
