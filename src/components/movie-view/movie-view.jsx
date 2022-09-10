@@ -30,6 +30,8 @@ export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
 
+    console.log('From movie-view', this.props);
+
     return (
       <Row className="movie-view justify-content-md-center mt-5">
         <Col>

@@ -52,5 +52,5 @@ MovieCard.propTypes = {
     Rating: PropTypes.number.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
+  // onMovieClick: PropTypes.func.isRequired,
 };

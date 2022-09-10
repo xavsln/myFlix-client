@@ -6,6 +6,9 @@ export const READ_MOVIES_LIST = 'READ_MOVIES_LIST';
 export const READ_SELECTED_MOVIE_INFO = 'READ_SELECTED_MOVIE_INFO';
 export const SET_FILTER = 'SET_FILTER';
 
+export const CREATE_USER = 'CREATE_USER';
+export const READ_USER_PROFILE = 'READ_USER_PROFILE';
+
 // #2. Add an **action creator**, ie. a JS function that will return an action (ie. the function will return a type and a value)
 // When these functions are called in the main-view.jsx file, it will trigger the below actions:
 
@@ -32,3 +35,35 @@ export function setFilter(value) {
     value,
   };
 }
+
+export function createUser(value) {
+  console.log('CREATE_USER action triggered');
+  return {
+    type: CREATE_USER,
+    value,
+  };
+}
+
+// This action will take the Username as input data (ie. value)
+export function readUserProfile(value) {
+  console.log('READ_USER_PROFILE action triggered');
+  return {
+    type: READ_USER_PROFILE,
+    value,
+  };
+}
+
+export const loginUser = () => {
+  console.log('LOGIN_USER action triggered');
+  return {
+    type: 'LOGIN_USER',
+  };
+};
+
+// When called, this action will logout the user
+export const logoutUser = () => {
+  console.log('LOGOUT_USER action triggered');
+  return {
+    type: 'LOGOUT_USER',
+  };
+};

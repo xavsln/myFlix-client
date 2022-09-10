@@ -3,7 +3,11 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 
-import { readMoviesList, readSelectedMovieInfo } from '../../actions/actions';
+import {
+  readMoviesList,
+  readSelectedMovieInfo,
+  readUserProfile,
+} from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -26,8 +30,8 @@ class MainView extends React.Component {
     super();
     // State declaration - Initialize MainView component's state (ie. components data)
     this.state = {
-      // movies: [],
-      user: null,
+      // movies: [],  // Removed as we do not want to use the local state anymore but the one from Redux Store instead
+      // user: null, // Removed as we do not want to use the local state anymore but the one from Redux Store instead
     };
   }
 
@@ -95,6 +99,7 @@ class MainView extends React.Component {
     // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
     let { user } = this.state;
+
     let { role } = this.state;
 
     return (
@@ -104,6 +109,10 @@ class MainView extends React.Component {
 
         <Container>
           <Row className="main-view justify-content-md-center">
+            {/* ================== */}
+            {/* Root route */}
+            {/* ================== */}
+
             <Route
               exact
               path="/"
@@ -127,6 +136,10 @@ class MainView extends React.Component {
                 );
               }}
             />
+
+            {/* ======================================= */}
+            {/* Read a specific Movie information route */}
+            {/* ======================================= */}
 
             <Route
               path="/movies/:movieId"
@@ -225,6 +238,10 @@ class MainView extends React.Component {
               }}
             />
 
+            {/* =========================== */}
+            {/* New User Registration route */}
+            {/* =========================== */}
+
             <Route
               path="/register"
               render={() => {
@@ -232,7 +249,9 @@ class MainView extends React.Component {
                 return <RegistrationView />;
               }}
             />
-
+            {/* ============================= */}
+            {/* Read User profile information */}
+            {/* ============================= */}
             <Route
               path="/profile"
               render={() => {
@@ -249,7 +268,10 @@ class MainView extends React.Component {
 // mapStateToProps is a function that—if defined—will allow the component (the one we want to connect) to subscribe to store updates.
 // Any time the store is updated, this function will be called.
 let mapStateToProps = (state) => {
-  return { movies: state.movies };
+  return {
+    movies: state.movies,
+    users: state.userReducer,
+  };
 };
 
 // Allows to convert state (in this case our actions/functions) to props and make it available for use in designated components

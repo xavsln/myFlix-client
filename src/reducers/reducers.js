@@ -7,6 +7,9 @@ import {
   READ_MOVIES_LIST,
   SET_FILTER,
   READ_SELECTED_MOVIE_INFO,
+  CREATE_USER,
+  LOGIN_USER,
+  LOGOUT_USER,
 } from '../actions/actions';
 
 // visibilityFilter Reducer:
@@ -53,25 +56,44 @@ function movies(state = initialState, action) {
 // . Declare users **reducer function** that take a **state** and an **action**
 // . null value will only be used to initialize the state. However later the app will use the latest state instead.
 
-// function userReducer(state = null, action) {
-//   switch (action.type) {
-//     case LOGIN_USER:
-//       console.log('LOGIN_USER');
-//       return action.value;
+function userReducer(state = null, action) {
+  switch (action.type) {
+    case CREATE_USER:
+      console.log('CREATE_USER');
+      return action.value;
 
-//     case READ_USER_PROFILE:
-//       console.log('READ_USER_PROFILE');
-//       return action.value;
+    // case LOGIN_USER:
+    //   console.log('LOGIN_USER');
+    //   return action.value;
 
-//     default:
-//       return state;
-//   }
-// }
+    // case READ_USER_PROFILE:
+    //   console.log('READ_USER_PROFILE');
+    //   return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function isLoggedUserReducer(state = false, action) {
+  switch (action.type) {
+    case LOGIN_USER:
+      return (state = true);
+
+    case LOGOUT_USER:
+      return (state = false);
+
+    default:
+      return state;
+  }
+}
 
 // We use a combiner (combined reducer function) provided by redux in order to club our reducers and export them
 const moviesApp = combineReducers({
   visibilityFilterReducer,
   movies,
+  userReducer,
+  isLoggedUserReducer,
 });
 
 // Finally we can export the combined reducer movieApp so it can be used by the store
