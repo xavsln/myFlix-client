@@ -92,14 +92,25 @@ class MainView extends React.Component {
   render() {
     // const { movies, user, role } = this.state;  // Unused now... was needed when state was stored in the component private store (vs. Redux store as below)
 
-    console.log('movies state object extracted from the props: ', this.props);
+    console.log('State object extracted from the props: ', this.props);
+    console.log(
+      'movies state object extracted from the props: ',
+      this.props.movies
+    );
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into this component)
     let { movies } = this.props.movies; // movies is extracted from this.props rather than from the this.state
     console.log('Movies after the props: ', movies);
     // let { selectedMovie } = this.props.selectedMovie;
     // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
-    let { user } = this.state;
+    // let { user } = this.state;
+    let { user } = JSON.parse(this.props.users.userData).Username;
+    // console.log('User from the local state: ', user);
+    // let jsonData = this.props.users.userData;
+    console.log(
+      'User state from the props Redux Store: ',
+      JSON.parse(this.props.users.userData).Username
+    );
 
     let { role } = this.state;
 
@@ -268,7 +279,7 @@ class MainView extends React.Component {
                 );
 
                 // pass the loggedIn user to the readUserProfile action
-                // this.props.readUserProfile(loggedInUser);
+                this.props.readUserProfile(loggedInUser);
 
                 // Profile user data of the logged in user will be transfered via props filled out with data coming from the Redux store:
                 return (
@@ -302,4 +313,5 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   readMoviesList,
   readSelectedMovieInfo,
+  readUserProfile,
 })(MainView);

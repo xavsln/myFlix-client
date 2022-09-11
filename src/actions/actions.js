@@ -44,7 +44,7 @@ export function createUser(value) {
   };
 }
 
-// This action will take the Username as input data (ie. value)
+// This action will take the User data as input data (ie. value)
 export function readUserProfile(value) {
   console.log('READ_USER_PROFILE action triggered');
   return {

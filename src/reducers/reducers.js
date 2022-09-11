@@ -74,7 +74,9 @@ function userReducer(state = initialUserState, action) {
 
     case READ_USER_PROFILE:
       console.log('READ_USER_PROFILE');
-      return action.value;
+      // Update the userData substate of the state inside Redux store
+      // In this case action.value is the loggedIn User Object
+      return { ...state, userData: action.value };
 
     default:
       return state;
