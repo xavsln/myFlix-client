@@ -8,6 +8,7 @@ import {
   SET_FILTER,
   READ_SELECTED_MOVIE_INFO,
   CREATE_USER,
+  READ_USER_PROFILE,
   LOGIN_USER,
   LOGOUT_USER,
 } from '../actions/actions';
@@ -56,7 +57,12 @@ function movies(state = initialState, action) {
 // . Declare users **reducer function** that take a **state** and an **action**
 // . null value will only be used to initialize the state. However later the app will use the latest state instead.
 
-function userReducer(state = null, action) {
+// Declare initial State for User as per the data collected from localStorage (browser storage)
+let initialUserState = {
+  userData: localStorage.getItem('userData'),
+};
+
+function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case CREATE_USER:
       console.log('CREATE_USER');
@@ -66,15 +72,16 @@ function userReducer(state = null, action) {
     //   console.log('LOGIN_USER');
     //   return action.value;
 
-    // case READ_USER_PROFILE:
-    //   console.log('READ_USER_PROFILE');
-    //   return action.value;
+    case READ_USER_PROFILE:
+      console.log('READ_USER_PROFILE');
+      return action.value;
 
     default:
       return state;
   }
 }
 
+// Maybe later this should also be part of the userReducer as a substate instead of a stand alone state
 function isLoggedUserReducer(state = false, action) {
   switch (action.type) {
     case LOGIN_USER:

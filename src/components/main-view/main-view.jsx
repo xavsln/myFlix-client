@@ -56,8 +56,9 @@ class MainView extends React.Component {
       user: authData.user.Username,
     });
 
+    // LocalStorage object allows to save key/value pairs in the browser
     localStorage.setItem('token', authData.token);
-    // localStorage.setItem('user', authData.user);
+    localStorage.setItem('userData', JSON.stringify(authData.user));
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
     localStorage.setItem('email', authData.user.Email);
@@ -255,7 +256,29 @@ class MainView extends React.Component {
             <Route
               path="/profile"
               render={() => {
-                return <ProfileView user={user} role={role} movies={movies} />;
+                console.log('User profile action shall be triggered here');
+                console.log(
+                  'Props available from the /profile route in main-view: ',
+                  this.props.users.userData
+                );
+                let loggedInUser = this.props.users.userData;
+                console.log(
+                  'Logged In user data for props transfer to ProfileView: ',
+                  loggedInUser
+                );
+
+                // pass the loggedIn user to the readUserProfile action
+                // this.props.readUserProfile(loggedInUser);
+
+                // Profile user data of the logged in user will be transfered via props filled out with data coming from the Redux store:
+                return (
+                  <ProfileView
+                    user={loggedInUser} // data coming from the Redux Store
+                    role={role}
+                    movies={movies}
+                  />
+                );
+                // return <ProfileView user={user} role={role} movies={movies} />;
               }}
             />
           </Row>
