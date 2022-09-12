@@ -28,11 +28,14 @@ export function MenuBar({ user }) {
     localStorage.removeItem('role');
     localStorage.removeItem('email');
     localStorage.removeItem('birthday');
+    localStorage.removeItem('userData');
 
     // Update state to show the initial view after User logged out
-    this.setState({
-      user: null,
-    });
+    // this.setState({
+    // user: null,
+    // });
+    this.props.logoutUser();
+    // Trigger the LOG_OUT action (through logoutUser()) to update user state in Redux Store
   };
 
   return (

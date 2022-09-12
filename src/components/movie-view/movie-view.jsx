@@ -32,6 +32,8 @@ export class MovieView extends React.Component {
 
     console.log('From movie-view', this.props);
 
+    console.log('Movie from MovieView: ', movie);
+
     return (
       <Row className="movie-view justify-content-md-center mt-5">
         <Col>

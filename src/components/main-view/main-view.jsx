@@ -3,17 +3,19 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 
+// import required actions
 import {
   readMoviesList,
   readSelectedMovieInfo,
   readUserProfile,
+  loginUser,
 } from '../../actions/actions';
+
 import MoviesList from '../movies-list/movies-list';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { MenuBar } from '../menu-bar/menu-bar';
-
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
@@ -26,6 +28,9 @@ import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 class MainView extends React.Component {
+  // ???
+  // ??? Is this constructor still relevant as we are now using Redux to manage our states?
+  // ???
   constructor() {
     super();
     // State declaration - Initialize MainView component's state (ie. components data)
@@ -36,12 +41,14 @@ class MainView extends React.Component {
   }
 
   componentDidMount() {
-    // Store the token in the browser to allow authentication from the Client side
+    // The token is stored in the browser to allow authentication from the Client side
+    // getItem methid allows to retrieve its value (or null if it does not exist)
     let accessToken = localStorage.getItem('token');
 
     if (accessToken !== null) {
+      // setState() method to change the state object
       this.setState({
-        user: localStorage.getItem('user'),
+        // user: localStorage.getItem('user'),
         role: localStorage.getItem('role'),
       });
       this.getMovies(accessToken);
@@ -49,22 +56,28 @@ class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
+    console.log('authData: ', authData);
 
     // We update the user variable stored into the state of the MainView component
     this.setState({
-      user: authData.user.Username,
+      // user: authData.user.Username,
     });
 
+    // When User logs in below data are stored into its browser
     // LocalStorage object allows to save key/value pairs in the browser
     localStorage.setItem('token', authData.token);
     localStorage.setItem('userData', JSON.stringify(authData.user));
+
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
     localStorage.setItem('email', authData.user.Email);
     localStorage.setItem('birthday', authData.user.Birthday);
 
     this.getMovies(authData.token);
+
+    // Trigger the LOG_IN action (through loginUser()) to update the log status of the User in the Redux Store
+    // Use JSON.parse to convert JSON format to JS Object
+    this.props.loginUser(JSON.parse(localStorage.getItem('userData')));
   }
 
   getMovies(token) {
@@ -81,7 +94,7 @@ class MainView extends React.Component {
         //   movies: response.data,
         // });
 
-        // We call readMoviesList action and pass the full movies list
+        // We call readMoviesList action and pass the full movies list from the API
         this.props.readMoviesList(response.data);
       })
       .catch(function (error) {
@@ -99,18 +112,39 @@ class MainView extends React.Component {
     );
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into this component)
     let { movies } = this.props.movies; // movies is extracted from this.props rather than from the this.state
-    console.log('Movies after the props: ', movies);
+    console.log('Movies after the render: ', movies);
+    // console.log('Movies after the props: ', movies);
     // let { selectedMovie } = this.props.selectedMovie;
     // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
+    let user = JSON.parse(this.props.users.userData);
+
+    console.log('JSON parse userdata: ', JSON.parse(this.props.users.userData));
+
+    if (JSON.parse(this.props.users.userData)) {
+      console.log('there is a user');
+      user = JSON.parse(this.props.users.userData).Username;
+      console.log('USer from th etest user: ', user);
+    } else {
+      console.log('there is NO user');
+      // let { user } = this.state;
+    }
+
     // let { user } = this.state;
-    let { user } = JSON.parse(this.props.users.userData).Username;
+    // let user = JSON.parse(this.props.users.userData).Username;
+
+    // let user = this.props.users.userData;
+    // console.log(
+    //   'UserData from the render',
+    //   JSON.parse(this.props.users.userData).Username
+    // );
+    // console.log('User from the render', user);
     // console.log('User from the local state: ', user);
     // let jsonData = this.props.users.userData;
-    console.log(
-      'User state from the props Redux Store: ',
-      JSON.parse(this.props.users.userData).Username
-    );
+    // console.log(
+    //   'User state from the props Redux Store: ',
+    //   JSON.parse(this.props.users.userData).Username
+    // );
 
     let { role } = this.state;
 
@@ -129,6 +163,14 @@ class MainView extends React.Component {
               exact
               path="/"
               render={() => {
+                // console.log(
+                //   'Check user value from root route: ',
+                //   JSON.parse(this.props.users.userData).Username
+                // );
+                // user = JSON.parse(this.props.users.userData);
+
+                // If no user, show the LoginView component
+                console.log('Check user from Root: ', user);
                 if (!user)
                   return (
                     <Col>
@@ -196,6 +238,10 @@ class MainView extends React.Component {
               }}
             />
 
+            {/* ======================================= */}
+            {/* Read a specific Genre information route */}
+            {/* ======================================= */}
+
             <Route
               path="/genres/:name"
               render={({ match, history }) => {
@@ -220,6 +266,10 @@ class MainView extends React.Component {
                 );
               }}
             />
+
+            {/* ========================================== */}
+            {/* Read a specific Director information route */}
+            {/* ========================================== */}
 
             <Route
               path="/directors/:name"
@@ -305,6 +355,7 @@ let mapStateToProps = (state) => {
   return {
     movies: state.movies,
     users: state.userReducer,
+    isLoggedInUser: state.isLoggedUserReducer,
   };
 };
 
@@ -314,4 +365,5 @@ export default connect(mapStateToProps, {
   readMoviesList,
   readSelectedMovieInfo,
   readUserProfile,
+  loginUser,
 })(MainView);
