@@ -4,12 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 // import required actions
-import {
-  readMoviesList,
-  readSelectedMovieInfo,
-  readUserProfile,
-  loginUser,
-} from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -28,16 +23,13 @@ import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 class MainView extends React.Component {
-  // ???
-  // ??? Is this constructor still relevant as we are now using Redux to manage our states?
-  // ???
   constructor() {
     super();
     // State declaration - Initialize MainView component's state (ie. components data)
-    this.state = {
-      // movies: [],  // Removed as we do not want to use the local state anymore but the one from Redux Store instead
-      // user: null, // Removed as we do not want to use the local state anymore but the one from Redux Store instead
-    };
+    // this.state = {
+    //   // movies: [],  // Removed as we do not want to use the local state anymore but the one from Redux Store instead
+    //   // user: null, // Removed as we do not want to use the local state anymore but the one from Redux Store instead
+    // };
   }
 
   componentDidMount() {
@@ -47,37 +39,48 @@ class MainView extends React.Component {
 
     if (accessToken !== null) {
       // setState() method to change the state object
-      this.setState({
-        // user: localStorage.getItem('user'),
-        role: localStorage.getItem('role'),
+      // this.setState({
+      //   // user: localStorage.getItem('user'),
+      //   role: localStorage.getItem('role'),
+      // });
+
+      this.props.setUser({
+        user: localStorage.getItem('user'),
       });
+
       this.getMovies(accessToken);
     }
   }
 
   onLoggedIn(authData) {
-    console.log('authData: ', authData);
+    console.log('authData from MainView component: ', authData);
 
     // We update the user variable stored into the state of the MainView component
-    this.setState({
-      // user: authData.user.Username,
+    // this.setState({
+    //   user: authData.user.Username,
+    // });
+
+    this.props.setUser({
+      user: authData.user.Username,
     });
 
     // When User logs in below data are stored into its browser
     // LocalStorage object allows to save key/value pairs in the browser
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('userData', JSON.stringify(authData.user));
+
+    // let dataForUser = JSON.stringify(authData.user);
+    console.log('data for user:', authData.user);
+
+    // localStorage.setItem('userData', JSON.stringify(authData.user));
 
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
     localStorage.setItem('email', authData.user.Email);
     localStorage.setItem('birthday', authData.user.Birthday);
+    localStorage.setItem('favoriteMovies', authData.user.favoriteMovies);
 
+    // Will trigger the getMovies function to fetch movies from the API
     this.getMovies(authData.token);
-
-    // Trigger the LOG_IN action (through loginUser()) to update the log status of the User in the Redux Store
-    // Use JSON.parse to convert JSON format to JS Object
-    this.props.loginUser(JSON.parse(localStorage.getItem('userData')));
   }
 
   getMovies(token) {
@@ -89,13 +92,8 @@ class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // Assign the result to the state
-        // this.setState({
-        //   movies: response.data,
-        // });
-
-        // We call readMoviesList action and pass the full movies list from the API
-        this.props.readMoviesList(response.data);
+        // We call setMovies action and pass the full movies list from the API
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -103,32 +101,27 @@ class MainView extends React.Component {
   }
 
   render() {
-    // const { movies, user, role } = this.state;  // Unused now... was needed when state was stored in the component private store (vs. Redux store as below)
-
+    console.log('THIS SHOULD SHOW FROM THE RENDER');
     console.log('State object extracted from the props: ', this.props);
-    console.log(
-      'movies state object extracted from the props: ',
-      this.props.movies
-    );
+
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into this component)
-    let { movies } = this.props.movies; // movies is extracted from this.props rather than from the this.state
+    let { movies, user } = this.props; // movies and user are extracted from this.props rather than from the this.state
     console.log('Movies after the render: ', movies);
-    // console.log('Movies after the props: ', movies);
+    console.log('User after the render: ', user);
+
     // let { selectedMovie } = this.props.selectedMovie;
     // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
-    let user = JSON.parse(this.props.users.userData);
+    // console.log('JSON parse userdata: ', JSON.parse(this.props.users.userData));
 
-    console.log('JSON parse userdata: ', JSON.parse(this.props.users.userData));
-
-    if (JSON.parse(this.props.users.userData)) {
-      console.log('there is a user');
-      user = JSON.parse(this.props.users.userData).Username;
-      console.log('USer from th etest user: ', user);
-    } else {
-      console.log('there is NO user');
-      // let { user } = this.state;
-    }
+    // if (JSON.parse(this.props.users.userData)) {
+    //   console.log('there is a user');
+    //   user = JSON.parse(this.props.users.userData).Username;
+    //   console.log('USer from th etest user: ', user);
+    // } else {
+    //   console.log('there is NO user');
+    //   // let { user } = this.state;
+    // }
 
     // let { user } = this.state;
     // let user = JSON.parse(this.props.users.userData).Username;
@@ -146,13 +139,14 @@ class MainView extends React.Component {
     //   JSON.parse(this.props.users.userData).Username
     // );
 
-    let { role } = this.state;
+    // let { role } = this.state;
 
     return (
       <Router>
         {/* MenuBar component with user **prop** (ie. variable) to be passed from parent component (ie. MainView) to MenuBar Child component */}
+        {console.log('User state from the Router', user)}
+        {console.log('Movies state from the Router', movies)}
         <MenuBar user={user} />
-
         <Container>
           <Row className="main-view justify-content-md-center">
             {/* ================== */}
@@ -163,14 +157,6 @@ class MainView extends React.Component {
               exact
               path="/"
               render={() => {
-                // console.log(
-                //   'Check user value from root route: ',
-                //   JSON.parse(this.props.users.userData).Username
-                // );
-                // user = JSON.parse(this.props.users.userData);
-
-                // If no user, show the LoginView component
-                console.log('Check user from Root: ', user);
                 if (!user)
                   return (
                     <Col>
@@ -182,6 +168,10 @@ class MainView extends React.Component {
 
                 return (
                   <>
+                    {console.log(
+                      'Should return the movie list with the following list of movies: ',
+                      movies
+                    )}
                     <Col xl={12} className="mb-3">
                       <VisibilityFilterInput />
                     </Col>
@@ -215,12 +205,11 @@ class MainView extends React.Component {
                   this.props
                 );
 
-                // this.props.readSelectedMovieInfo(movie);
                 let movie = movies.find((m) => m._id === match.params.movieId);
 
                 console.log('Movie from movie :', movie);
                 // pass the selected movie to the readSelectedMovieInfo action
-                this.props.readSelectedMovieInfo(movie);
+                // this.props.readSelectedMovieInfo(movie);
 
                 return (
                   <Col md={8}>
@@ -317,25 +306,9 @@ class MainView extends React.Component {
             <Route
               path="/profile"
               render={() => {
-                console.log('User profile action shall be triggered here');
-                console.log(
-                  'Props available from the /profile route in main-view: ',
-                  this.props.users.userData
-                );
-                let loggedInUser = this.props.users.userData;
-                console.log(
-                  'Logged In user data for props transfer to ProfileView: ',
-                  loggedInUser
-                );
-
-                // pass the loggedIn user to the readUserProfile action
-                this.props.readUserProfile(loggedInUser);
-
-                // Profile user data of the logged in user will be transfered via props filled out with data coming from the Redux store:
                 return (
                   <ProfileView
-                    user={loggedInUser} // data coming from the Redux Store
-                    role={role}
+                    user={user} // data coming from the Redux Store
                     movies={movies}
                   />
                 );
@@ -353,17 +326,15 @@ class MainView extends React.Component {
 // Any time the store is updated, this function will be called.
 let mapStateToProps = (state) => {
   return {
-    movies: state.movies,
-    users: state.userReducer,
-    isLoggedInUser: state.isLoggedUserReducer,
+    movies: state.moviesReducer,
+    user: state.userReducer.user,
   };
 };
 
 // Allows to convert state (in this case our actions/functions) to props and make it available for use in designated components
-// Thanks to that we will have access to readMoviesList and readSelectedMovieInfo functions (ie. actions) from the props
+// Thanks to that we will have access to setMovies and setUser functions (ie. actions) from the props
+// This connect method will dispatch the actions
 export default connect(mapStateToProps, {
-  readMoviesList,
-  readSelectedMovieInfo,
-  readUserProfile,
-  loginUser,
+  setMovies,
+  setUser,
 })(MainView);

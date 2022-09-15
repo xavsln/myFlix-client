@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 // Method below allows us to create the store for states
 import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
-import moviesApp from './reducers/reducers';
+import moviesAppReducers from './reducers/reducers';
 
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
@@ -15,10 +15,10 @@ import MainView from './components/main-view/main-view';
 // Import statement to indicate that we need to bundle `./index.scss`
 import './index.scss';
 
-// Create a store that knows the reducers clubed into the movieApp variable
-const store = createStore(moviesApp, devToolsEnhancer());
+// Create a store that knows the reducers clubed into the movieAppReducers variable
+const store = createStore(moviesAppReducers, devToolsEnhancer());
 
-// Main component (will eventually use all the others)visibilityFilter
+// Main component
 class MyFlixApplication extends React.Component {
   render() {
     return (

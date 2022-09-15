@@ -4,7 +4,7 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
 
 export function LoginView(props) {
-  console.log(props);
+  console.log('Show the props from the LoginView: ', props);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
-// import { VisibilityFilterInput } from '../visibility-filter-input/visibility-filter-input';
 
 export function MenuBar({ user }) {
+  console.log('User from the MenuBar: ', user);
   // check if user is logged in
   const isloggedin = () => {
     // We check if there is a token in our browser
@@ -34,12 +34,13 @@ export function MenuBar({ user }) {
     // this.setState({
     // user: null,
     // });
-    this.props.logoutUser();
+    // this.props.logoutUser();
     // Trigger the LOG_OUT action (through logoutUser()) to update user state in Redux Store
   };
 
   return (
     <>
+      {console.log('MenuBar should return')}
       <Navbar bg="dark" variant="dark" fixed="top" expand="lg">
         <Container>
           <Navbar.Brand href="/">MyFlix</Navbar.Brand>
