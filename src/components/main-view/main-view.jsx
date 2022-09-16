@@ -77,7 +77,7 @@ class MainView extends React.Component {
     localStorage.setItem('role', authData.user.Role);
     localStorage.setItem('email', authData.user.Email);
     localStorage.setItem('birthday', authData.user.Birthday);
-    localStorage.setItem('favoriteMovies', authData.user.favoriteMovies);
+    localStorage.setItem('favoriteMovies', authData.user.FavoriteMovies);
 
     // Will trigger the getMovies function to fetch movies from the API
     this.getMovies(authData.token);

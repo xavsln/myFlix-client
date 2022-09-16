@@ -70,7 +70,7 @@ export function LoginView(props) {
               <h2>Login</h2>
             </Card.Header>
             <Form style={{ width: '80%', margin: '1rem auto' }}>
-              <Form.Group controlId="formUsername">
+              <Form.Group controlid="formUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
                   type="text"
@@ -82,7 +82,7 @@ export function LoginView(props) {
                 {usernameErr && <p>{usernameErr}</p>}
               </Form.Group>
 
-              <Form.Group controlId="formPassword">
+              <Form.Group controlid="formPassword">
                 <Form.Label>Password: (minimum 4 characters)</Form.Label>
                 <Form.Control
                   type="password"

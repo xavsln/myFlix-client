@@ -11,19 +11,41 @@ const currentUser = localStorage.getItem('user');
 
 const accessToken = localStorage.getItem('token');
 
-const addMovieToFavList = (movieId) => {
-  console.log(`test: ${movieId}`);
+const addMovieToFavList = (movie) => {
+  console.log(`test: ${movie._id}`);
+  console.log(`test: ${JSON.stringify(movie)}`);
+
   console.log('Current user:', currentUser);
-  // console.log('AccessToken: ', accessToken);
 
-  // axios.post(
-  //   `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movieId}`,
-  //   {
-  //     headers: { Authorization: `Bearer ${accessToken}` },
-  //   }
-  // );
+  console.log('AccessToken: ', accessToken);
 
-  alert('Movie will be successfully added to the list of favorites. (later)');
+  // ERROR MESSAGE:
+  // POST https://themyflixapp.herokuapp.com/users/UserTest1/movies/62c5bcd8edec0e5c47e32f1f
+  // 401 (Unauthorized)
+  // However the accessToken looks Ok
+  // Also this is working from postman
+
+  axios
+    .post(
+      `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    )
+    .then((response) => {
+      console.log(
+        'This should be the response to the request to add to the list of movies'
+      );
+      const data = response.data;
+      localStorage.setItem('favoriteMovies', data.favoriteMovies);
+      console.log(data);
+      alert('Movie added to the list of favorites!');
+      // window.open('/', '_self');
+    })
+    .catch((err) => {
+      console.error(err);
+      alert('Unable to add movie to the list of favorite movies!');
+    });
 };
 
 export class MovieView extends React.Component {
@@ -42,7 +64,7 @@ export class MovieView extends React.Component {
               src={movie.ImagePath}
               className="img-fluid"
               alt="Poster image of the movie"
-              crossorigin="anonymous"
+              crossOrigin="anonymous"
             />
           </div>
         </Col>
@@ -85,7 +107,7 @@ export class MovieView extends React.Component {
             <Button
               variant="success"
               onClick={() => {
-                addMovieToFavList(movie._id);
+                addMovieToFavList(movie);
               }}
             >
               Add movie to Favorites

@@ -16,7 +16,7 @@ export class MovieCard extends React.Component {
             variant="top"
             src={movie.ImagePath}
             alt="Poster image of the movie"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
         </div>
 
