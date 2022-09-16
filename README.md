@@ -1,3 +1,5 @@
+![My Image](src/images/main-page_image.png)
+
 This App is the Client side of the myFlix App.
 It makes use of React Library.
 
