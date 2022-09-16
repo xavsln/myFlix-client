@@ -19,6 +19,11 @@ const addMovieToFavList = (movie) => {
 
   console.log('AccessToken: ', accessToken);
 
+  console.log(
+    'URL App is trying to reach: ',
+    `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`
+  );
+
   // ERROR MESSAGE:
   // POST https://themyflixapp.herokuapp.com/users/UserTest1/movies/62c5bcd8edec0e5c47e32f1f
   // 401 (Unauthorized)
@@ -28,6 +33,7 @@ const addMovieToFavList = (movie) => {
   axios
     .post(
       `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`,
+      { user: currentUser },
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }

@@ -4,6 +4,7 @@ import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
 export function MenuBar({ user }) {
   console.log('User from the MenuBar: ', user);
   // check if user is logged in
+
   const isloggedin = () => {
     // We check if there is a token in our browser
     let accessToken = localStorage.getItem('token');
@@ -29,13 +30,7 @@ export function MenuBar({ user }) {
     localStorage.removeItem('email');
     localStorage.removeItem('birthday');
     localStorage.removeItem('userData');
-
-    // Update state to show the initial view after User logged out
-    // this.setState({
-    // user: null,
-    // });
-    // this.props.logoutUser();
-    // Trigger the LOG_OUT action (through logoutUser()) to update user state in Redux Store
+    localStorage.removeItem('favoriteMovies');
   };
 
   return (
@@ -49,19 +44,6 @@ export function MenuBar({ user }) {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Nav.Link href="/">Home |</Nav.Link>
-              {/* <Nav.Link href="/profile">Profile</Nav.Link> */}
-
-              {/* {isloggedin() && (
-                <Nav.Link href={`/users/${user}`}>
-                  My favorite movies |
-                </Nav.Link>
-              )} */}
-
-              {/* {isloggedin() && (
-                <Nav.Link onClick={onLoggedOut} href="/">
-                  Logout
-                </Nav.Link>
-              )} */}
 
               {!isloggedin() && <Nav.Link href="/">Login |</Nav.Link>}
               {!isloggedin() && <Nav.Link href="/register">Sign-up</Nav.Link>}

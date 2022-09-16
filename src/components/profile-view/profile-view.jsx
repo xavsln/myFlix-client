@@ -156,7 +156,7 @@ export function ProfileView(props) {
                               alt={movie.Title}
                               src={movie.ImagePath}
                               // {console.log(imagePath)}
-                              crossorigin="anonymous"
+                              crossOrigin="anonymous"
                             />
                             <Figure.Caption>{movie.Title}</Figure.Caption>
                           </Link>

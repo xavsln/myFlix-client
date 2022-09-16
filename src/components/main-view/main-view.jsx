@@ -71,7 +71,7 @@ class MainView extends React.Component {
     // let dataForUser = JSON.stringify(authData.user);
     console.log('data for user:', authData.user);
 
-    // localStorage.setItem('userData', JSON.stringify(authData.user));
+    localStorage.setItem('userData', JSON.stringify(authData.user));
 
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('role', authData.user.Role);
@@ -112,7 +112,10 @@ class MainView extends React.Component {
     // let { selectedMovie } = this.props.selectedMovie;
     // console.log('SelectedMovie from the props Redux Store: ', selectedMovie);
 
-    // console.log('JSON parse userdata: ', JSON.parse(this.props.users.userData));
+    console.log(
+      'JSON parse userdata: ',
+      JSON.parse(localStorage.getItem('userData'))
+    );
 
     // if (JSON.parse(this.props.users.userData)) {
     //   console.log('there is a user');
