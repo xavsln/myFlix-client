@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import { UserInfo } from './user-info';
+// import { UserInfo } from './user-info';
 import { UserUpdate } from './user-update';
 
 import { Container, Row, Col, Card, Figure, Button } from 'react-bootstrap';

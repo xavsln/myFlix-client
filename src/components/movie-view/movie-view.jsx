@@ -24,12 +24,6 @@ const addMovieToFavList = (movie) => {
     `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`
   );
 
-  // ERROR MESSAGE:
-  // POST https://themyflixapp.herokuapp.com/users/UserTest1/movies/62c5bcd8edec0e5c47e32f1f
-  // 401 (Unauthorized)
-  // However the accessToken looks Ok
-  // Also this is working from postman
-
   axios
     .post(
       `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`,
@@ -147,7 +141,7 @@ MovieView.propTypes = {
       Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
       Birth: PropTypes.instanceOf(Date).isRequired,
-      Death: PropTypes.instanceOf(Date).isRequired, // => To be checked
+      Death: PropTypes.instanceOf(Date).isRequired,
     }),
     ImagePath: PropTypes.string.isRequired,
     Rating: PropTypes.number.isRequired,

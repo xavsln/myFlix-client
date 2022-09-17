@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Button } from 'react-bootstrap';
 
+import PropTypes from 'prop-types';
+
 export function DirectorView(props) {
   console.log(props);
   return (
@@ -16,3 +18,11 @@ export function DirectorView(props) {
     </>
   );
 }
+
+DirectorView.propTypes = {
+  director: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Bio: PropTypes.string.isRequired,
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired,
+};
