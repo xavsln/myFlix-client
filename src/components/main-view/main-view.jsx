@@ -96,7 +96,12 @@ class MainView extends React.Component {
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into other component)
     let { movies, user } = this.props; // movies and user are extracted from this.props rather than from the this.state
     console.log('Movies after the render: ', movies);
+
     console.log('User after the render: ', user);
+
+    if (movies.length === 0) {
+      alert('Movies is an empty array!');
+    }
 
     return (
       <Router>
@@ -121,7 +126,10 @@ class MainView extends React.Component {
                     </Col>
                   );
 
-                if (movies.length === 0) return <div className="main-view" />;
+                if (movies.length === 0)
+                  return (
+                    <div className="main-view">Loading please wait...</div>
+                  );
 
                 return (
                   <>
@@ -265,8 +273,8 @@ class MainView extends React.Component {
 // Any time the store is updated, this function will be called.
 let mapStateToProps = (state) => {
   return {
-    movies: state.moviesReducer,
     user: state.userReducer.user,
+    movies: state.moviesReducer,
   };
 };
 
@@ -274,8 +282,8 @@ let mapStateToProps = (state) => {
 // Thanks to that we will have access to setMovies and setUser functions (ie. actions) from the props
 // This connect method will dispatch the actions
 export default connect(mapStateToProps, {
-  setMovies,
   setUser,
+  setMovies,
 })(MainView);
 
 MainView.propTypes = {

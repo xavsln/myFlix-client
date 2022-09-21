@@ -78,6 +78,9 @@ export function ProfileView(props) {
       console.log('Movie removed');
 
       alert('Movie successfully deleted from the list.');
+
+      // Reload the page to see the updated list of favorite movies
+      window.location.reload(false);
     } else {
       alert('Movie not deleted from the list.');
     }
