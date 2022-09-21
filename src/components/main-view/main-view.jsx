@@ -35,6 +35,7 @@ class MainView extends React.Component {
     let accessToken = localStorage.getItem('token');
 
     if (accessToken !== null) {
+      // If User already connected, its state value will be the one from the browser local storage
       this.props.setUser({
         user: localStorage.getItem('user'),
       });
@@ -43,14 +44,32 @@ class MainView extends React.Component {
     }
   }
 
+  getMovies(token) {
+    console.log('getMovies function successfully tiggered.');
+
+    // We use axios library to fetch data from our API
+    axios
+      .get('https://themyflixapp.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        // We call setMovies action and pass the full movies list from the API. This will update the movies state in the Redux Store
+        this.props.setMovies(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   onLoggedIn(authData) {
     console.log('authData from MainView component: ', authData);
 
     // Call the setUser action. This will update the user state with the Username value
+
     this.props.setUser({
       user: authData.user.Username,
     });
-    location.reload();
+    // location.reload();
 
     // When User logs in below data are stored into its browser
     // LocalStorage object allows to save key/value pairs in the browser
@@ -71,35 +90,13 @@ class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  getMovies(token) {
-    console.log('getMovies function successfully tiggered.');
-
-    // We use axios library to fetch data from our API
-    axios
-      .get('https://themyflixapp.herokuapp.com/movies', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        // We call setMovies action and pass the full movies list from the API. This will update the movies state in the Redux Store
-        this.props.setMovies(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   render() {
-    // console.log('State object extracted from the props: ', this.props);
+    console.log('State object extracted from the props: ', this.props);
 
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into other component)
     let { movies, user } = this.props; // movies and user are extracted from this.props rather than from the this.state
     console.log('Movies after the render: ', movies);
     console.log('User after the render: ', user);
-
-    // console.log(
-    //   'JSON parse userdata: ',
-    //   JSON.parse(localStorage.getItem('userData'))
-    // );
 
     return (
       <Router>
@@ -251,7 +248,8 @@ class MainView extends React.Component {
             <Route
               path="/profile"
               render={() => {
-                // console.log('User from the User Profile Route: ', { user });
+                console.log('User from the User Profile Route: ', { user });
+                console.log('Movies from the User Profile Route: ', { movies });
 
                 return <ProfileView user={user} movies={movies} />;
               }}
@@ -292,11 +290,11 @@ MainView.propTypes = {
       Director: PropTypes.shape({
         Name: PropTypes.string.isRequired,
         Bio: PropTypes.string.isRequired,
-        Birth: PropTypes.instanceOf(Date).isRequired,
-        Death: PropTypes.instanceOf(Date).isRequired, // => To be checked
+        // Birth: PropTypes.instanceOf(Date).isRequired,
+        // Death: PropTypes.instanceOf(Date).isRequired,
       }),
       ImagePath: PropTypes.string.isRequired,
-      Rating: PropTypes.number.isRequired,
+      // Rating: PropTypes.number.isRequired,
       Featured: PropTypes.bool.isRequired,
     })
   ).isRequired,

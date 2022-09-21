@@ -45,11 +45,11 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.instanceOf(Date).isRequired,
-      Death: PropTypes.instanceOf(Date).isRequired, // => To be checked
+      // Birth: PropTypes.instanceOf(Date).isRequired,
+      // Death: PropTypes.instanceOf(Date).isRequired,
     }),
     ImagePath: PropTypes.string.isRequired,
-    Rating: PropTypes.number.isRequired,
+    // Rating: PropTypes.number.isRequired,
     Featured: PropTypes.bool.isRequired,
   }).isRequired,
   // onMovieClick: PropTypes.func.isRequired,

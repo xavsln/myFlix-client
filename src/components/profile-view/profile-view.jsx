@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import PropTypes from 'prop-types';
+
 import axios from 'axios';
 
 // import { UserInfo } from './user-info';
@@ -13,19 +15,31 @@ import './profile-view.scss';
 
 export function ProfileView(props) {
   console.log('Props from ProfileView: ', props);
+
   const movies = props.movies;
-  console.log('List from props in Profile-View: ', movies);
+  console.log('Movies List from props in Profile-View: ', movies);
 
   const currentUser = localStorage.getItem('user');
-  console.log('Current user:', currentUser);
+  console.log('Current user from browser local storage:', currentUser);
 
   const accessToken = localStorage.getItem('token');
-  console.log('AccessToken: ', accessToken);
+  console.log('AccessToken from browser local storage: ', accessToken);
 
-  const [user, setUser] = useState(currentUser);
+  // Declare user as a stateful value
+  const [user, setUser] = useState('');
   console.log('User assigned to state: ', user);
 
+  // Declare favoriteMovies as a stateful value
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+
+  console.log('favoriteMovies assigned to state: ', favoriteMovies);
+  console.log(
+    'favoriteMovies from local store: ',
+    localStorage.getItem('favoriteMovies')
+  );
+
+  // getUser function will fetch data from the API
+  // user state and favoriteMovies state will be set
 
   const getUser = () => {
     axios
@@ -34,8 +48,8 @@ export function ProfileView(props) {
       })
       .then((response) => {
         setUser(response.data);
+
         setFavoriteMovies(response.data.FavoriteMovies);
-        // console.log(favoriteMovies);
       })
       .catch((error) => console.error(error));
   };
@@ -43,6 +57,10 @@ export function ProfileView(props) {
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log('Show the User value after the getUser: ', user);
+
+  console.log('Show fav movies after the getUser: ', favoriteMovies);
 
   const removeFav = (m_id) => {
     // Confirmation box
@@ -85,6 +103,7 @@ export function ProfileView(props) {
       localStorage.removeItem('role');
       localStorage.removeItem('email');
       localStorage.removeItem('birthday');
+      localStorage.removeItem('userData');
 
       // Update state to show the initial view after User logged out
       this.setState({
@@ -142,33 +161,46 @@ export function ProfileView(props) {
                 <h4>Favorite movies:</h4>
               </Card.Title>
               <Row>
+                {console.log('favoriteMovies before map:', favoriteMovies)}
+                {console.log('movies value before map:', movies)}
+                {/* sometimes, instead of being equal to an array of movies objects, movies would be an empty array resulting in an error on the below line*/}
+                {/* movies array comes from the props... sometimes it would be an empty array */}
+                {/* Probably an issue in the main-view.jsx which does not provide the correct props values to profile-view */}
+
                 {favoriteMovies.map((movieId) => {
                   let movie = movies.find((m) => m._id === movieId);
+
+                  console.log('Movie variable after the find method: ', movie);
+
                   return (
-                    <>
-                      <Col xs={12} md={6} lg={3} className="fav-movie">
-                        <Figure>
-                          {console.log('Movie object: ', movie._id)}
-                          <Link to={`movies/${movie._id}`}>
-                            <Figure.Image
-                              width={171}
-                              height={180}
-                              alt={movie.Title}
-                              src={movie.ImagePath}
-                              // {console.log(imagePath)}
-                              crossOrigin="anonymous"
-                            />
-                            <Figure.Caption>{movie.Title}</Figure.Caption>
-                          </Link>
-                          <Button
-                            variant="warning"
-                            onClick={() => removeFav(movie._id)}
-                          >
-                            Remove from list
-                          </Button>
-                        </Figure>
-                      </Col>
-                    </>
+                    <Col
+                      xs={12}
+                      md={6}
+                      lg={3}
+                      className="fav-movie"
+                      key={movie._id}
+                    >
+                      <Figure>
+                        {console.log('Movie object: ', movie._id)}
+                        <Link to={`movies/${movie._id}`}>
+                          <Figure.Image
+                            width={171}
+                            height={180}
+                            alt={movie.Title}
+                            src={movie.ImagePath}
+                            // {console.log(imagePath)}
+                            crossOrigin="anonymous"
+                          />
+                          <Figure.Caption>{movie.Title}</Figure.Caption>
+                        </Link>
+                        <Button
+                          variant="warning"
+                          onClick={() => removeFav(movie._id)}
+                        >
+                          Remove from list
+                        </Button>
+                      </Figure>
+                    </Col>
                   );
                 })}
               </Row>
@@ -179,3 +211,26 @@ export function ProfileView(props) {
     </Container>
   );
 }
+
+ProfileView.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Title: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+      }),
+      Director: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Bio: PropTypes.string.isRequired,
+        // Birth: PropTypes.instanceOf(Date).isRequired,
+        // Death: PropTypes.instanceOf(Date).isRequired,
+      }),
+      ImagePath: PropTypes.string.isRequired,
+      // Rating: PropTypes.number.isRequired,
+      Featured: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
+  // user: PropTypes.string.isRequired,
+};
