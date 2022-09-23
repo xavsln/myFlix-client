@@ -4,7 +4,7 @@
 
 # 1. Project description
 
-This App is the Client side of the myFlix API. (see below for details regarding the REST API and database)
+This App is the **Client side** of the **myFlix API**. (see below for details regarding the REST API and database)
 
 It makes use of React Library as well as Redux.
 
@@ -12,10 +12,10 @@ It makes use of React Library as well as Redux.
 
 # 2. User Stories
 
-- User will be able to access information on movies, directors, and genres so that he
+- User will be able to **access information on movies, directors, and genres** so that he
   can learn more about movies he watched or is interested in.
 
-- User will be able to create a profile so he can save data about his favorite movies.
+- User will be able to **create a profile so he can save data about his favorite movies**.
 
 ---
 
@@ -42,5 +42,11 @@ This App can be executed from the terminal usng the following command: **`npm st
 # 5. API used by the project
 
 - myFlix API: https://github.com/xavsln/myFlix_v20220621-1
+
+---
+
+# 6. Online version
+
+- myFlix Client online: https://themyflix.netlify.app/
 
 ---
