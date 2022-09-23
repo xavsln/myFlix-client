@@ -21,7 +21,7 @@ It makes use of React Library as well as Redux.
 
 # 3. How to get the project running
 
-This App can be executed from the terminal usng the following command: **`parcel src/index.html`**
+This App can be executed from the terminal usng the following command: **`npm start`**
 
 ---
 
