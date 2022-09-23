@@ -99,9 +99,9 @@ class MainView extends React.Component {
 
     console.log('User after the render: ', user);
 
-    if (movies.length === 0) {
-      alert('Movies is an empty array!');
-    }
+    // if (movies.length === 0) {
+    //   alert('Movies is an empty array!');
+    // }
 
     return (
       <Router>
@@ -258,6 +258,18 @@ class MainView extends React.Component {
               render={() => {
                 console.log('User from the User Profile Route: ', { user });
                 console.log('Movies from the User Profile Route: ', { movies });
+
+                if (!user)
+                  return (
+                    <Col>
+                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                    </Col>
+                  );
+
+                if (movies.length === 0)
+                  return (
+                    <div className="main-view">Loading please wait...</div>
+                  );
 
                 return <ProfileView user={user} movies={movies} />;
               }}
