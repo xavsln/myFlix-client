@@ -8,14 +8,12 @@ import { setFilter } from '../../actions/actions';
 
 function VisibilityFilterInput(props) {
   return (
-    // <div className="filter-field">
     <Form.Control
       controlid="formFilter"
       onChange={(e) => props.setFilter(e.target.value)}
       value={props.visibilityFilterReducer}
       placeholder="filter"
     />
-    // </div>
   );
 }
 

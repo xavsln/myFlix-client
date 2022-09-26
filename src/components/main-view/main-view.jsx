@@ -45,8 +45,6 @@ class MainView extends React.Component {
   }
 
   getMovies(token) {
-    console.log('getMovies function successfully tiggered.');
-
     // We use axios library to fetch data from our API
     axios
       .get('https://themyflixapp.herokuapp.com/movies', {
@@ -62,8 +60,6 @@ class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log('authData from MainView component: ', authData);
-
     // Call the setUser action. This will update the user state with the Username value
 
     this.props.setUser({
@@ -74,9 +70,6 @@ class MainView extends React.Component {
     // When User logs in below data are stored into its browser
     // LocalStorage object allows to save key/value pairs in the browser
     localStorage.setItem('token', authData.token);
-
-    // let dataForUser = JSON.stringify(authData.user);
-    console.log('data for user:', authData.user);
 
     localStorage.setItem('userData', JSON.stringify(authData.user));
 
@@ -91,17 +84,8 @@ class MainView extends React.Component {
   }
 
   render() {
-    console.log('State object extracted from the props: ', this.props);
-
     // The movies state is extracted from the store (via props) thanks to the connect function below that allows to put the state into props (hence accessible into other component)
     let { movies, user } = this.props; // movies and user are extracted from this.props rather than from the this.state
-    console.log('Movies after the render: ', movies);
-
-    console.log('User after the render: ', user);
-
-    // if (movies.length === 0) {
-    //   alert('Movies is an empty array!');
-    // }
 
     return (
       <Router>
@@ -133,10 +117,6 @@ class MainView extends React.Component {
 
                 return (
                   <>
-                    {console.log(
-                      'Should return the movie list with the following list of movies: ',
-                      movies
-                    )}
                     <Col xl={12} className="mb-3">
                       <VisibilityFilterInput />
                     </Col>
@@ -256,9 +236,6 @@ class MainView extends React.Component {
             <Route
               path="/profile"
               render={() => {
-                console.log('User from the User Profile Route: ', { user });
-                console.log('Movies from the User Profile Route: ', { movies });
-
                 if (!user)
                   return (
                     <Col>

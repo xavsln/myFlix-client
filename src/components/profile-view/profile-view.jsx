@@ -14,29 +14,19 @@ import { Link } from 'react-router-dom';
 import './profile-view.scss';
 
 export function ProfileView(props) {
-  console.log('Props from ProfileView: ', props);
+  // console.log('Props from ProfileView: ', props);
 
   const movies = props.movies;
-  console.log('Movies List from props in Profile-View: ', movies);
 
   const currentUser = localStorage.getItem('user');
-  console.log('Current user from browser local storage:', currentUser);
 
   const accessToken = localStorage.getItem('token');
-  console.log('AccessToken from browser local storage: ', accessToken);
 
   // Declare user as a stateful value
   const [user, setUser] = useState('');
-  console.log('User assigned to state: ', user);
 
   // Declare favoriteMovies as a stateful value
   const [favoriteMovies, setFavoriteMovies] = useState([]);
-
-  console.log('favoriteMovies assigned to state: ', favoriteMovies);
-  console.log(
-    'favoriteMovies from local store: ',
-    localStorage.getItem('favoriteMovies')
-  );
 
   // getUser function will fetch data from the API
   // user state and favoriteMovies state will be set
@@ -57,10 +47,6 @@ export function ProfileView(props) {
   useEffect(() => {
     getUser();
   }, []);
-
-  console.log('Show the User value after the getUser: ', user);
-
-  console.log('Show fav movies after the getUser: ', favoriteMovies);
 
   const removeFav = (m_id) => {
     // Confirmation box
@@ -87,7 +73,6 @@ export function ProfileView(props) {
   };
 
   const onDeregister = (user_id) => {
-    // alert('You will deregister');
     console.log(user_id);
     // Confirmation box
     let confirmActionMessage = confirm(
@@ -149,8 +134,6 @@ export function ProfileView(props) {
                 <h4>Profile update:</h4>
               </Card.Title>
               <UserUpdate user={user} />
-              {/* <p>Name: {user.Username}</p> */}
-              {console.log('User from the user state in update section', user)}
             </Card.Body>
           </Card>
         </Col>
@@ -164,16 +147,8 @@ export function ProfileView(props) {
                 <h4>Favorite movies:</h4>
               </Card.Title>
               <Row>
-                {console.log('favoriteMovies before map:', favoriteMovies)}
-                {console.log('movies value before map:', movies)}
-                {/* sometimes, instead of being equal to an array of movies objects, movies would be an empty array resulting in an error on the below line*/}
-                {/* movies array comes from the props... sometimes it would be an empty array */}
-                {/* Probably an issue in the main-view.jsx which does not provide the correct props values to profile-view */}
-
                 {favoriteMovies.map((movieId) => {
                   let movie = movies.find((m) => m._id === movieId);
-
-                  console.log('Movie variable after the find method: ', movie);
 
                   return (
                     <Col
@@ -184,14 +159,12 @@ export function ProfileView(props) {
                       key={movie._id}
                     >
                       <Figure>
-                        {console.log('Movie object: ', movie._id)}
                         <Link to={`movies/${movie._id}`}>
                           <Figure.Image
                             width={171}
                             height={180}
                             alt={movie.Title}
                             src={movie.ImagePath}
-                            // {console.log(imagePath)}
                             crossOrigin="anonymous"
                           />
                           <Figure.Caption>{movie.Title}</Figure.Caption>

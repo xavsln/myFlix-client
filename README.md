@@ -21,7 +21,8 @@ It makes use of React Library as well as Redux.
 
 # 3. How to get the project running
 
-This App can be executed from the terminal usng the following command: **`npm start`**
+This App can be executed from the terminal usng the following command: **`npm start`**.
+Then open url: http://localhost:1234/
 
 ---
 

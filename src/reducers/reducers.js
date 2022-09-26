@@ -1,5 +1,5 @@
 // Reducers will actually take the actions defined and modify the state of the app for each action
-// Therefore, Reducers will take the action, the current state or initial state.  After executing the code, it will return an updated state. Then the related componenets will re-render (update)
+// Therefore, Reducers will take the action, the current state or initial state.  After executing the code, it will return an updated state. Then the related components will re-render (update)
 
 import { combineReducers } from 'redux';
 
@@ -66,12 +66,12 @@ function userReducer(state = '', action) {
   }
 }
 
-// We use a combiner (combined reducer function) provided by redux in order to club our reducers and export them
+// Combiner (combined reducer function) provided by redux is used in order to club reducers and export them
 const moviesAppReducers = combineReducers({
   visibilityFilterReducer,
   moviesReducer,
   userReducer,
 });
 
-// Finally we can export the combined reducer movieApp so it can be used by the store
+// Finally combined reducer movieAppReducers is exported so it can be used by the store
 export default moviesAppReducers;

@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 export function DirectorView(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <>
       <h5>Name:</h5>

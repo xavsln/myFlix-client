@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
 
 export function MenuBar({ user }) {
-  console.log('User from the MenuBar: ', user);
+  // console.log('User from the MenuBar: ', user);
   // check if user is logged in
 
   const isloggedin = () => {
@@ -14,10 +14,10 @@ export function MenuBar({ user }) {
     }
 
     if (accessToken) {
-      console.log('User is logged in');
+      // console.log('User is logged in');
       return accessToken;
     } else {
-      console.log('User is not logged in');
+      // console.log('User is not logged in');
       return false;
     }
   };
@@ -35,7 +35,6 @@ export function MenuBar({ user }) {
 
   return (
     <>
-      {console.log('MenuBar should return')}
       <Navbar bg="dark" variant="dark" fixed="top" expand="lg">
         <Container>
           <Navbar.Brand href="/">MyFlix</Navbar.Brand>

@@ -66,12 +66,12 @@ export function RegistrationView(props) {
         .then((response) => {
           const data = response.data;
 
-          console.log(data);
+          // console.log(data);
           alert('Registration sucessfull, please login!');
           window.open('/', '_self');
         })
         .catch((response) => {
-          console.error(response);
+          // console.error(response);
           alert('Unable to register!');
         });
     }

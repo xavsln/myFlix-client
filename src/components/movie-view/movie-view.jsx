@@ -12,18 +12,6 @@ const currentUser = localStorage.getItem('user');
 const accessToken = localStorage.getItem('token');
 
 const addMovieToFavList = (movie) => {
-  console.log(`test: ${movie._id}`);
-  console.log(`test: ${JSON.stringify(movie)}`);
-
-  console.log('Current user:', currentUser);
-
-  console.log('AccessToken: ', accessToken);
-
-  console.log(
-    'URL App is trying to reach: ',
-    `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`
-  );
-
   axios
     .post(
       `https://themyflixapp.herokuapp.com/users/${currentUser}/movies/${movie._id}`,
@@ -33,12 +21,9 @@ const addMovieToFavList = (movie) => {
       }
     )
     .then((response) => {
-      console.log(
-        'This should be the response to the request to add to the list of movies'
-      );
       const data = response.data;
       localStorage.setItem('favoriteMovies', data.favoriteMovies);
-      console.log(data);
+
       alert('Movie added to the list of favorites!');
       // window.open('/', '_self');
     })
@@ -51,10 +36,6 @@ const addMovieToFavList = (movie) => {
 export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
-
-    console.log('From movie-view', this.props);
-
-    console.log('Movie from MovieView: ', movie);
 
     return (
       <Row className="movie-view justify-content-md-center mt-5">
@@ -140,8 +121,8 @@ MovieView.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.instanceOf(Date).isRequired,
-      Death: PropTypes.instanceOf(Date).isRequired,
+      // Birth: PropTypes.instanceOf(Date).isRequired,
+      // Death: PropTypes.instanceOf(Date).isRequired,
     }),
     ImagePath: PropTypes.string.isRequired,
     Rating: PropTypes.number.isRequired,

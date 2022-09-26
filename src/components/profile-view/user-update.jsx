@@ -7,10 +7,7 @@ import { Container, Row, Col, Card, Form, Button, Link } from 'react-bootstrap';
 
 export function UserUpdate(props) {
   const accessToken = localStorage.getItem('token');
-  console.log('AccessToken: ', accessToken);
-
-  console.log('From the UserUpdate function!');
-  console.log(props);
+  // console.log(props);
   const [username, setUsername] = useState(props.user.Username);
   const [password, setPassword] = useState(props.user.Password);
   const [email, setEmail] = useState(props.user.Email);
@@ -24,7 +21,6 @@ export function UserUpdate(props) {
   // Validate user inputs
   const validate = () => {
     let isReq = true;
-    console.log('From validate function');
 
     if (!username) {
       setUsernameErr('Username Required');
@@ -55,14 +51,8 @@ export function UserUpdate(props) {
 
   const handleUpdateProfile = (e) => {
     e.preventDefault();
-    // console.log(username, password, email, birthday);
-    /* Send a request to the server */
-
-    console.log('Test from button: ', accessToken);
 
     const isReq = validate();
-    console.log('IsReq value: ', isReq);
-    console.log('Updated email: ', email);
 
     if (isReq) {
       axios
@@ -82,12 +72,12 @@ export function UserUpdate(props) {
         .then((response) => {
           const data = response.data;
 
-          console.log(data);
-          alert('Update sucessfull, please login!');
+          // console.log(data);
+          alert('Update sucessfull!');
           window.open('/', '_self');
         })
         .catch((response) => {
-          console.error(response);
+          // console.error(response);
           alert('Unable to register!');
         });
     }
@@ -111,8 +101,7 @@ export function UserUpdate(props) {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder={props.user.Username}
                 />
-                {/* {console.log('Username from Form', { username })} */}
-                {/* code added here to display validation error */}
+
                 {usernameErr && <p>{usernameErr}</p>}
               </Form.Group>
 
@@ -161,9 +150,6 @@ export function UserUpdate(props) {
                   Update
                 </Button>
                 <p></p>
-                {/* <p>
-                  If already registered, <Link to={'/'}>Log-in</Link>
-                </p> */}
               </Form.Group>
             </Form>
           </Card>

@@ -4,7 +4,7 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
 
 export function LoginView(props) {
-  console.log('Show the props from the LoginView: ', props);
+  // console.log('Show the props from the LoginView: ', props);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,10 +34,6 @@ export function LoginView(props) {
   };
 
   const handleSubmit = (e) => {
-    console.log(username);
-    console.log(typeof username);
-    console.log(password);
-    console.log(typeof password);
     e.preventDefault();
 
     const isReq = validate();
@@ -50,13 +46,9 @@ export function LoginView(props) {
         .then((response) => {
           const data = response.data;
           props.onLoggedIn(data);
-          console.log('sucessfull login');
         })
         .catch((e) => {
-          // console.log('no such user ' + username + ' in the DB');
           alert('no such user: ' + username + ' in the DB');
-          console.log(username);
-          console.log(password);
         });
     }
   };
@@ -83,7 +75,7 @@ export function LoginView(props) {
               </Form.Group>
 
               <Form.Group controlid="formPassword">
-                <Form.Label>Password: (minimum 4 characters)</Form.Label>
+                <Form.Label>Password: (minimum 8 characters)</Form.Label>
                 <Form.Control
                   type="password"
                   value={password}
@@ -103,13 +95,6 @@ export function LoginView(props) {
                 >
                   Submit
                 </Button>
-                {/* <Button
-                  variant="secondary"
-                  type="button"
-                  style={{ margin: '1rem' }}
-                >
-                  Register
-                </Button> */}
               </Form.Group>
             </Form>
           </Card>
