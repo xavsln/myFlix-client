@@ -23,7 +23,7 @@ function MoviesList(props) {
   if (!movies) return <div className="main-view" />;
 
   return filteredMovies.map((m) => (
-    <Col lg={3} xs={12} key={m._id}>
+    <Col lg={3} md={4} sm={6} xs={12} key={m._id}>
       <MovieCard movie={m} />
     </Col>
   ));
