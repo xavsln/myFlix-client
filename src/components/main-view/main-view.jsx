@@ -120,7 +120,7 @@ class MainView extends React.Component {
                     <Col xl={12} className="mb-3">
                       <VisibilityFilterInput />
                     </Col>
-                    <MoviesList movies={movies} />;
+                    <MoviesList movies={movies} />
                   </>
                 );
               }}
